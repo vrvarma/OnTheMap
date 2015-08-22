@@ -8,11 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		1D1C09201B6E92AA005EB0A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C091F1B6E92AA005EB0A9 /* AppDelegate.swift */; };
-		1D1C09221B6E92AA005EB0A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C09211B6E92AA005EB0A9 /* ViewController.swift */; };
+		1D1C09221B6E92AA005EB0A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C09211B6E92AA005EB0A9 /* LoginViewController.swift */; };
 		1D1C09251B6E92AA005EB0A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D1C09231B6E92AA005EB0A9 /* Main.storyboard */; };
 		1D1C09271B6E92AA005EB0A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D1C09261B6E92AA005EB0A9 /* Images.xcassets */; };
 		1D1C092A1B6E92AA005EB0A9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1C09281B6E92AA005EB0A9 /* LaunchScreen.xib */; };
 		1D1C09361B6E92AA005EB0A9 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C09351B6E92AA005EB0A9 /* OnTheMapTests.swift */; };
+		1D1C09431B6E939B005EB0A9 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C09421B6E939B005EB0A9 /* OTMClient.swift */; };
+		1D1C09451B6E93E4005EB0A9 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C09441B6E93E4005EB0A9 /* OTMConstants.swift */; };
+		1D3334F11B812E4F00ED9CB8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */; };
+		1D3334F31B813DA300ED9CB8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F21B813DA300ED9CB8 /* TableViewController.swift */; };
+		1D3334F51B814B4C00ED9CB8 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F41B814B4C00ED9CB8 /* StudentInformation.swift */; };
+		1D3334FD1B81884F00ED9CB8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */; };
+		1D5CC1EF1B783FD300D1857F /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1EC1B783FD300D1857F /* Roboto-Medium.ttf */; };
+		1D5CC1F01B783FD300D1857F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1ED1B783FD300D1857F /* Roboto-Regular.ttf */; };
+		1D5CC1F11B783FD300D1857F /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1EE1B783FD300D1857F /* Roboto-Thin.ttf */; };
+		1D8903FC1B82D11800DE663D /* InfoPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8903FB1B82D11800DE663D /* InfoPositionViewController.swift */; };
+		1D8904011B87656A00DE663D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8904001B87656A00DE663D /* Reachability.swift */; };
+		1D8904061B879BB000DE663D /* OTMNWClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8904051B879BB000DE663D /* OTMNWClient.swift */; };
+		1D8FFCEB1B7C29A6003C6DAD /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FFCEA1B7C29A6003C6DAD /* OTMConvenience.swift */; };
+		1D8FFCEE1B7C4C75003C6DAD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */; };
+		1D8FFCF01B7C4D45003C6DAD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */; };
+		1D8FFCF41B7C5D00003C6DAD /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +45,29 @@
 		1D1C091A1B6E92AA005EB0A9 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1C091E1B6E92AA005EB0A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D1C091F1B6E92AA005EB0A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1D1C09211B6E92AA005EB0A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1D1C09211B6E92AA005EB0A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1D1C09241B6E92AA005EB0A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D1C09261B6E92AA005EB0A9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D1C09291B6E92AA005EB0A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D1C092F1B6E92AA005EB0A9 /* OnTheMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1C09341B6E92AA005EB0A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D1C09351B6E92AA005EB0A9 /* OnTheMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapTests.swift; sourceTree = "<group>"; };
+		1D1C09421B6E939B005EB0A9 /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
+		1D1C09441B6E93E4005EB0A9 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
+		1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1D3334F21B813DA300ED9CB8 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		1D3334F41B814B4C00ED9CB8 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		1D5CC1EC1B783FD300D1857F /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		1D5CC1ED1B783FD300D1857F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		1D5CC1EE1B783FD300D1857F /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		1D8903FB1B82D11800DE663D /* InfoPositionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPositionViewController.swift; sourceTree = "<group>"; };
+		1D8904001B87656A00DE663D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		1D8904051B879BB000DE663D /* OTMNWClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMNWClient.swift; sourceTree = "<group>"; };
+		1D8FFCEA1B7C29A6003C6DAD /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConvenience.swift; sourceTree = "<group>"; };
+		1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D8FFCEE1B7C4C75003C6DAD /* FBSDKLoginKit.framework in Frameworks */,
+				1D8FFCF01B7C4D45003C6DAD /* FBSDKCoreKit.framework in Frameworks */,
+				1D3334FD1B81884F00ED9CB8 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,11 +112,11 @@
 		1D1C091C1B6E92AA005EB0A9 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				1D8FFCEC1B7C4C51003C6DAD /* Framework */,
 				1D1C091F1B6E92AA005EB0A9 /* AppDelegate.swift */,
-				1D1C09211B6E92AA005EB0A9 /* ViewController.swift */,
-				1D1C09231B6E92AA005EB0A9 /* Main.storyboard */,
-				1D1C09261B6E92AA005EB0A9 /* Images.xcassets */,
-				1D1C09281B6E92AA005EB0A9 /* LaunchScreen.xib */,
+				1D1C093F1B6E9361005EB0A9 /* Model */,
+				1D5CC1EA1B75988500D1857F /* View */,
+				1D5CC1EB1B75989E00D1857F /* Controller */,
 				1D1C091D1B6E92AA005EB0A9 /* Supporting Files */,
 			);
 			path = OnTheMap;
@@ -90,6 +125,11 @@
 		1D1C091D1B6E92AA005EB0A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D1C09261B6E92AA005EB0A9 /* Images.xcassets */,
+				1D8904021B8782AA00DE663D /* StoryBoard */,
+				1D5CC1EC1B783FD300D1857F /* Roboto-Medium.ttf */,
+				1D5CC1ED1B783FD300D1857F /* Roboto-Regular.ttf */,
+				1D5CC1EE1B783FD300D1857F /* Roboto-Thin.ttf */,
 				1D1C091E1B6E92AA005EB0A9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -110,6 +150,81 @@
 				1D1C09341B6E92AA005EB0A9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D1C093F1B6E9361005EB0A9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1D1C09401B6E9371005EB0A9 /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1D1C09401B6E9371005EB0A9 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				1D8903FF1B87655400DE663D /* Network */,
+				1D1C09411B6E937C005EB0A9 /* OTM */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		1D1C09411B6E937C005EB0A9 /* OTM */ = {
+			isa = PBXGroup;
+			children = (
+				1D1C09421B6E939B005EB0A9 /* OTMClient.swift */,
+				1D8904051B879BB000DE663D /* OTMNWClient.swift */,
+				1D8FFCEA1B7C29A6003C6DAD /* OTMConvenience.swift */,
+				1D1C09441B6E93E4005EB0A9 /* OTMConstants.swift */,
+				1D3334F41B814B4C00ED9CB8 /* StudentInformation.swift */,
+			);
+			name = OTM;
+			sourceTree = "<group>";
+		};
+		1D5CC1EA1B75988500D1857F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		1D5CC1EB1B75989E00D1857F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1D1C09211B6E92AA005EB0A9 /* LoginViewController.swift */,
+				1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */,
+				1D3334F21B813DA300ED9CB8 /* TableViewController.swift */,
+				1D8903FB1B82D11800DE663D /* InfoPositionViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1D8903FF1B87655400DE663D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1D8904001B87656A00DE663D /* Reachability.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		1D8904021B8782AA00DE663D /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				1D1C09231B6E92AA005EB0A9 /* Main.storyboard */,
+				1D1C09281B6E92AA005EB0A9 /* LaunchScreen.xib */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		1D8FFCEC1B7C4C51003C6DAD /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */,
+				1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */,
+				1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */,
+			);
+			name = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +307,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D5CC1EF1B783FD300D1857F /* Roboto-Medium.ttf in Resources */,
 				1D1C09251B6E92AA005EB0A9 /* Main.storyboard in Resources */,
+				1D5CC1F11B783FD300D1857F /* Roboto-Thin.ttf in Resources */,
+				1D5CC1F01B783FD300D1857F /* Roboto-Regular.ttf in Resources */,
 				1D1C092A1B6E92AA005EB0A9 /* LaunchScreen.xib in Resources */,
 				1D1C09271B6E92AA005EB0A9 /* Images.xcassets in Resources */,
 			);
@@ -212,8 +330,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D1C09221B6E92AA005EB0A9 /* ViewController.swift in Sources */,
+				1D8FFCEB1B7C29A6003C6DAD /* OTMConvenience.swift in Sources */,
+				1D1C09221B6E92AA005EB0A9 /* LoginViewController.swift in Sources */,
+				1D8FFCF41B7C5D00003C6DAD /* BorderedButton.swift in Sources */,
+				1D3334F31B813DA300ED9CB8 /* TableViewController.swift in Sources */,
+				1D8904061B879BB000DE663D /* OTMNWClient.swift in Sources */,
+				1D8903FC1B82D11800DE663D /* InfoPositionViewController.swift in Sources */,
+				1D1C09431B6E939B005EB0A9 /* OTMClient.swift in Sources */,
+				1D1C09451B6E93E4005EB0A9 /* OTMConstants.swift in Sources */,
+				1D8904011B87656A00DE663D /* Reachability.swift in Sources */,
+				1D3334F51B814B4C00ED9CB8 /* StudentInformation.swift in Sources */,
 				1D1C09201B6E92AA005EB0A9 /* AppDelegate.swift in Sources */,
+				1D3334F11B812E4F00ED9CB8 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +468,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OnTheMap",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,6 +482,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OnTheMap",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -409,6 +545,7 @@
 				1D1C093B1B6E92AA005EB0A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D1C093C1B6E92AA005EB0A9 /* Build configuration list for PBXNativeTarget "OnTheMapTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +554,7 @@
 				1D1C093E1B6E92AA005EB0A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
