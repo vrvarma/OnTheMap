@@ -37,9 +37,9 @@ extension OTMClient {
         var firstName: String? = ""
         var lastName: String? = ""
         var userId: String? = ""
-        var objectId:String?=nil
+        var objectId:String? = nil
         var Email: String? = ""
-        var mapString:String?=""
+        var mapString:String? = ""
         var weblink : String? = ""
         var longitude: Double?
         var latitude:Double?

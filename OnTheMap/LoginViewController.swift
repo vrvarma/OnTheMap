@@ -58,13 +58,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         textField.resignFirstResponder()
         return true
     }
-    //Make the Password Textfield secure.
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        if passwordTextField.editing{
-            passwordTextField.secureTextEntry = true
-        }
-    }
     
     
     @IBAction func openUdacitySignUpPage(sender: UIButton) {
@@ -72,6 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         UIApplication.sharedApplication().openURL(NSURL(string: OTMClient.Constants.UdacitySignUpURL)!)
         
     }
+    
     @IBAction func loginPressed(sender: UIButton) {
         
         OTMClient.sharedInstance().doUdacityLogin(emailTextField.text, password:passwordTextField.text){ (success, errorString) in
@@ -89,6 +83,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         }
     }
     
+    //Once user login successfully completes
+    //Present the TabBarController
     func completeLogin() {
         dispatch_async(dispatch_get_main_queue(), {
             
@@ -97,6 +93,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         })
     }
     
+    //Facebook Login
+    //Delegate Methods.
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         
         if error == nil {
@@ -123,9 +121,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         
-        OTMClient.sharedInstance().logoutFromUdacity {
+        OTMClient.sharedInstance().logout {
             (success, errorString) -> Void in
             
+            println("Logged out from facebook")
         }
     }
 }

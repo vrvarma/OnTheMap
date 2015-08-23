@@ -54,7 +54,7 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="157" y="116" width="288" height="30"/>
                                 </variation>
@@ -72,6 +72,7 @@
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cqo-1b-aiI">
                                 <rect key="frame" x="156" y="380" width="288" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -333,10 +334,6 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TW1-XA-zhy">
                                 <rect key="frame" x="0.0" y="236" width="600" height="320"/>
                             </mapView>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyQ-Tl-1ne">
-                                <rect key="frame" x="0.0" y="236" width="600" height="320"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nI-LQ-h2m">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -362,7 +359,7 @@
                                     <constraint firstAttribute="height" constant="119" id="s4a-f4-czu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a link to share" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nTj-5z-lQq" userLabel="urlTextField">
@@ -373,15 +370,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxg-DT-RBY" customClass="BorderedButton" customModule="OnTheMap" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxg-DT-RBY">
                                 <rect key="frame" x="222" y="402" width="157" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.92941176469999998" green="0.46274509800000002" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="157" id="LrM-tu-A1U"/>
                                     <constraint firstAttribute="height" constant="30" id="fIP-Ui-O2W"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Find on the Map"/>
+                                <state key="normal" title="Find on the Map">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="findOnMapPressed:" destination="tv6-Xv-Jw0" eventType="touchUpInside" id="rhN-FO-CkX"/>
                                 </connections>
@@ -391,9 +390,10 @@
                                 <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wxc-VJ-zUz">
-                                <rect key="frame" x="401" y="158" width="49" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <rect key="frame" x="344" y="158" width="106" height="30"/>
+                                <color key="backgroundColor" red="0.92941176469999998" green="0.46274509800000002" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -401,42 +401,50 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROh-1n-uWF">
-                                <rect key="frame" x="150" y="158" width="100" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <rect key="frame" x="150" y="158" width="129" height="30"/>
+                                <color key="backgroundColor" red="0.92941176469999998" green="0.46274509800000002" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="129" id="Zjv-Ac-6Dn"/>
+                                </constraints>
                                 <state key="normal" title="Show Browser">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="showInBrowser:" destination="tv6-Xv-Jw0" eventType="touchUpInside" id="W4b-Ue-9dV"/>
                                 </connections>
                             </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyQ-Tl-1ne">
+                                <rect key="frame" x="0.0" y="236" width="600" height="320"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Su7-fu-N3O" firstAttribute="centerX" secondItem="nTj-5z-lQq" secondAttribute="centerX" id="3VU-ar-AXW"/>
                             <constraint firstAttribute="centerX" secondItem="h0A-Xn-rLd" secondAttribute="centerX" id="4aW-Uk-1p7"/>
                             <constraint firstAttribute="centerX" secondItem="3dy-po-DNe" secondAttribute="centerX" constant="-0.5" id="9wc-sS-Zg5"/>
-                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="trailing" secondItem="nTj-5z-lQq" secondAttribute="trailing" id="BOh-R6-6dR"/>
+                            <constraint firstItem="hxg-DT-RBY" firstAttribute="top" secondItem="nTj-5z-lQq" secondAttribute="bottom" constant="264" id="EtZ-xa-3pe"/>
                             <constraint firstItem="8nI-LQ-h2m" firstAttribute="leading" secondItem="2h8-g6-JZX" secondAttribute="leading" id="Fs9-VK-C9V"/>
                             <constraint firstItem="8nI-LQ-h2m" firstAttribute="bottom" secondItem="VZc-EV-HZw" secondAttribute="top" id="GR1-F7-Hg0"/>
                             <constraint firstItem="Su7-fu-N3O" firstAttribute="top" secondItem="OpI-hc-tBS" secondAttribute="bottom" constant="24" id="Hid-Aa-5qB"/>
                             <constraint firstItem="h0A-Xn-rLd" firstAttribute="top" secondItem="Su7-fu-N3O" secondAttribute="bottom" constant="20" id="Iv7-bx-Jvb"/>
                             <constraint firstAttribute="trailing" secondItem="8nI-LQ-h2m" secondAttribute="trailing" id="KXY-D3-MwA"/>
-                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="top" secondItem="ROh-1n-uWF" secondAttribute="top" id="Mka-ju-dOB"/>
                             <constraint firstAttribute="centerX" secondItem="nTj-5z-lQq" secondAttribute="centerX" id="Ra8-PR-cDu"/>
-                            <constraint firstItem="hxg-DT-RBY" firstAttribute="top" secondItem="TW1-XA-zhy" secondAttribute="bottom" constant="-154" id="XAy-r2-Uju"/>
                             <constraint firstItem="xyQ-Tl-1ne" firstAttribute="top" secondItem="TW1-XA-zhy" secondAttribute="top" id="XnM-0x-00k"/>
+                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="leading" secondItem="ROh-1n-uWF" secondAttribute="trailing" constant="65" id="ZC1-pR-3hP"/>
                             <constraint firstItem="TW1-XA-zhy" firstAttribute="bottom" secondItem="8nI-LQ-h2m" secondAttribute="top" id="ZIZ-dI-AA3"/>
                             <constraint firstItem="xyQ-Tl-1ne" firstAttribute="leading" secondItem="TW1-XA-zhy" secondAttribute="leading" id="beU-NJ-K29"/>
                             <constraint firstItem="nTj-5z-lQq" firstAttribute="top" secondItem="OpI-hc-tBS" secondAttribute="bottom" constant="88" id="cfx-zr-zna"/>
                             <constraint firstItem="TW1-XA-zhy" firstAttribute="trailing" secondItem="8nI-LQ-h2m" secondAttribute="trailing" id="eHD-DS-Lbz"/>
                             <constraint firstItem="TW1-XA-zhy" firstAttribute="top" secondItem="h0A-Xn-rLd" secondAttribute="bottom" constant="23" id="ejX-CX-E0e"/>
-                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="top" secondItem="nTj-5z-lQq" secondAttribute="bottom" constant="20" id="jH3-Vg-0nv"/>
+                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="top" secondItem="nTj-5z-lQq" secondAttribute="bottom" constant="20" id="evZ-3K-cD2"/>
                             <constraint firstItem="hxg-DT-RBY" firstAttribute="centerX" secondItem="8nI-LQ-h2m" secondAttribute="centerX" id="jVQ-Vo-JyV"/>
                             <constraint firstItem="TW1-XA-zhy" firstAttribute="leading" secondItem="8nI-LQ-h2m" secondAttribute="leading" id="mNq-ig-1cB"/>
-                            <constraint firstItem="hxg-DT-RBY" firstAttribute="centerX" secondItem="TW1-XA-zhy" secondAttribute="centerX" constant="0.5" id="miY-82-LpJ"/>
+                            <constraint firstItem="ROh-1n-uWF" firstAttribute="leading" secondItem="h0A-Xn-rLd" secondAttribute="leading" id="pld-eJ-2Ri"/>
+                            <constraint firstItem="ROh-1n-uWF" firstAttribute="baseline" secondItem="wxc-VJ-zUz" secondAttribute="baseline" id="qbr-sN-VBc"/>
+                            <constraint firstItem="wxc-VJ-zUz" firstAttribute="trailing" secondItem="h0A-Xn-rLd" secondAttribute="trailing" id="rVj-J5-FQv"/>
                             <constraint firstAttribute="centerY" secondItem="3dy-po-DNe" secondAttribute="centerY" constant="0.5" id="rgb-BK-zPP"/>
-                            <constraint firstItem="nTj-5z-lQq" firstAttribute="leading" secondItem="ROh-1n-uWF" secondAttribute="leading" id="wPV-gm-ePq"/>
                             <constraint firstItem="xyQ-Tl-1ne" firstAttribute="trailing" secondItem="TW1-XA-zhy" secondAttribute="trailing" id="yQR-dK-YfW"/>
                             <constraint firstItem="xyQ-Tl-1ne" firstAttribute="bottom" secondItem="TW1-XA-zhy" secondAttribute="bottom" id="zDe-vI-l1q"/>
                         </constraints>

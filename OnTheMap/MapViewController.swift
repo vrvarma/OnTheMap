@@ -48,7 +48,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     
     @IBAction func logout(sender: UIBarButtonItem) {
         
-        OTMClient.sharedInstance().logoutFromUdacity() {success, errorString in
+        OTMClient.sharedInstance().logout() {success, errorString in
             
             if success{
                 
@@ -65,6 +65,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         }
     }
     
+    //UIMapView Delegate Methods
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         
         let reuseId = "pin"
@@ -95,7 +96,8 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         }
     }
     
-    func refreshData(){
+    //Method to retrieve the data
+    private func refreshData(){
         
         activityIndicatorView.startAnimating()
         OTMClient.sharedInstance().getStudentLocationData() {success, errorString in
@@ -126,6 +128,8 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         OTMClient.sharedInstance().resetDataModel()
         refreshData()
     }
+
+    //Method to build the MKPoint annotation from StudentInformation struct
     func buildAnnotationFromStudent(student :StudentInformation)-> MKPointAnnotation{
         
         var annotation = MKPointAnnotation()
@@ -139,6 +143,8 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         retrieveUserLocation()
     }
     
+    //Method to check whether the user already exists in the 
+    //Parse API database.
     func retrieveUserLocation(){
         OTMClient.sharedInstance().retrieveMyLocation(){ (success, errorString) in
             if success {
@@ -155,6 +161,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         }
     }
     
+    //Alert dialog to confirm with the user that he/she wants to overwrite the data
     func buildAlertDialog() -> UIAlertController{
         
         var confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -171,11 +178,11 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         return confirm
     }
     
+    //Method to show the InfoPositonViewController
     func showInfoPositionView(){
         dispatch_async(dispatch_get_main_queue()) {
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPositionViewController") as! InfoPositionViewController
             self.presentViewController(controller, animated: true, completion: nil)
         }
     }
-    
 }

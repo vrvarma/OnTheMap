@@ -57,6 +57,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         urlTextField.hidden = true
         showBrowserButton.hidden = true
         submitButton.hidden=true
+        submitButton.enabled = false
         
     }
     
@@ -72,14 +73,22 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
             OTMClient.alertDialog(self, errorTitle: "Invalid Location", action: "OK", errorMsg: "Please type in the location ")
         }
         else{
+            
             activityIndicatorView.startAnimating()
             
             getLocationFromString(locationTextField.text, withCompletion: { (location, error) -> () in
+                
                 if let error = error {
-                    println("error \(error)")
+                    
+                    println("getLocationFromString error \(error)")
                     self.activityIndicatorView.stopAnimating()
-                    OTMClient.alertDialog(self, errorTitle: "Invalid Location", action: "OK", errorMsg: "Cannot get the location")
+                    OTMClient.alertDialogWithHandler(self, errorTitle: "Invalid Location", action: "OK", errorMsg: "Cannot get the location",handler:{
+                        
+                        (alertActionOK) -> Void in
+                        self.findOnMapButton.hidden = false
+                    })
                 } else {
+                    
                     println("location coordinates \(location)")
                     
                     dispatch_async(dispatch_get_main_queue()){
@@ -107,6 +116,8 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                         
                         self.mapView.addAnnotation(annotation)
                         self.activityIndicatorView.stopAnimating()
+                        
+                        self.updateSubmitButtonState(false)
                     }
                     
                 }
@@ -115,30 +126,53 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         }
     }
     
-    func getLocationFromString(string: String, withCompletion completion: (location: CLLocation?, error: NSError?) -> ()) {
+    //Update the SubmitButton state
+    private func updateSubmitButtonState(enabled:Bool){
         
-        CLGeocoder().geocodeAddressString(string) { (location: [AnyObject]!, error: NSError!) -> Void in
+        isUrlValid = enabled
+        submitButton.enabled = enabled
+        submitButton.alpha = enabled ? 1.0:0.2
+    }
+    
+    //Method to get the longitude and latitude
+    //from the geocode address string
+    func getLocationFromString(geoCodeString: String, withCompletion completion: (location: CLLocation?, error: NSError?) -> ()) {
+        
+        CLGeocoder().geocodeAddressString(geoCodeString) { (location: [AnyObject]!, error: NSError!) -> Void in
             //            println("geocode \(location)")
-            if let error = error {
+            if error != nil {
+                
                 println("error geocoding in function \(error)")
                 completion(location: nil, error: error)
                 
             } else {
+                
                 let placemark = location.first as! CLPlacemark
                 let coordinates = placemark.location
                 // set the string and coordinates
-                OTMClient.sharedInstance().udacityUser.mapString = string
+                OTMClient.sharedInstance().udacityUser.mapString = geoCodeString
                 OTMClient.sharedInstance().udacityUser.longitude = coordinates.coordinate.longitude
                 OTMClient.sharedInstance().udacityUser.latitude = coordinates.coordinate.latitude
                 
                 completion(location: coordinates, error: nil)
-                
             }
         }
     }
     
+    //textfield delegate methods
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
+        replacementString string: String) -> Bool {
+            if textField == urlTextField {
+                //If text field is modified, disable submit button
+                updateSubmitButtonState(false)
+                return true
+            }
+            return true
+    }
+    
     var isUrlValid = false
     
+    //UIWebview delegate methods
     func webViewDidFinishLoad(webView: UIWebView) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -147,21 +181,26 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
             if currentURL != "about:blank" {
                 
                 urlTextField.text = currentURL
-                self.submitButton.enabled = true
+                updateSubmitButtonState(true)
             } else {
                 
-                isUrlValid = false
-                self.urlTextField.enabled = true
-                self.submitButton.enabled = false
+                urlTextField.enabled = true
+                updateSubmitButtonState(false)
             }
         } else {
-            isUrlValid = false
-            self.submitButton.enabled = false
+            
+            updateSubmitButtonState(false)
         }
     }
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         
+        println("webview errorCode \(error.code)")
+        //Not sure why webview returns when the backend forwards the page
+        //hack to let the webview proceed.
+        if(error.code == -999){
+            return
+        }
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
         let requestObj = NSURLRequest(URL: NSURL(string: "about:blank")!)
@@ -170,21 +209,33 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         OTMClient.alertDialog(self, errorTitle: "Error loading the URL", action: "OK", errorMsg: "\(error.localizedDescription) \(error.code)")
     }
     
-    @IBAction func showInBrowser(sender: UIButton) {
+    private func updateShowBrowserState(show: Bool){
         
-        mapView.hidden = true
-        webView.hidden = false
-        if showBrowserButton.currentTitle == "Show Map" {
-            
-            showBrowserButton.setTitle("Show Browser", forState: .Normal)
-            self.mapView.hidden = false
-            self.webView.hidden = true
-        } else {
+        if(show){
             
             showBrowserButton.setTitle("Show Map", forState: .Normal)
-            self.mapView.hidden = true
-            self.webView.hidden = false
+            mapView.hidden = true
+            webView.hidden = false
         }
+        else{
+            
+            showBrowserButton.setTitle("Show Browser", forState: .Normal)
+            mapView.hidden = false
+            webView.hidden = true
+        }
+    }
+    
+    @IBAction func showInBrowser(sender: UIButton) {
+        
+        if showBrowserButton.currentTitle == "Show Map" {
+            
+            updateShowBrowserState(false)
+        } else {
+            
+            updateShowBrowserState(true)
+        }
+        
+        //println(isUrlValid)
         
         if !isUrlValid && urlTextField.text != ""{
             
@@ -201,21 +252,22 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                     requestObj.timeoutInterval = 30
                     self.webView.loadRequest(requestObj)
                     urlTextField.resignFirstResponder()
-                    urlTextField.enabled = false
+                    //urlTextField.enabled = false
                 }
-            }
-        } else {
-            
-            OTMClient.alertDialogWithHandler(self, errorTitle: "URL Invalid", action: "OK", errorMsg: "This doesn't look like a valid URL", handler:{
-                (alertActionOK) -> Void in
                 
-                self.urlTextField.enabled = true
-                self.isUrlValid = false
-                self.submitButton.enabled = false
-                self.showBrowserButton.setTitle("Show Browser", forState: .Normal)
-                self.mapView.hidden = false
-                self.webView.hidden = true
-            })
+            } else {
+                
+                OTMClient.alertDialogWithHandler(self, errorTitle: "URL Invalid", action: "OK", errorMsg: "This doesn't look like a valid URL", handler:{
+                    (alertActionOK) -> Void in
+                    
+                    self.urlTextField.enabled = true
+                    self.isUrlValid = false
+                    self.submitButton.enabled = false
+                    self.showBrowserButton.setTitle("Show Browser", forState: .Normal)
+                    self.mapView.hidden = false
+                    self.webView.hidden = true
+                })
+            }
         }
     }
     
@@ -226,13 +278,17 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
             OTMClient.alertDialog(self, errorTitle: "Invalid URL", action: "OK", errorMsg: "Please input your URL")
         }else{
             
+            activityIndicatorView.startAnimating()
+            
             OTMClient.sharedInstance().udacityUser.weblink = urlTextField.text
             
             OTMClient.sharedInstance().postMyLocation(){ (success, errorString) in
                 if success {
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        // hide the activity indicator
+                        
+                        // stop the activity indicator
+                        self.activityIndicatorView.stopAnimating()
                         OTMClient.alertDialogWithHandler(self, errorTitle: "Success", action: "OK", errorMsg: "WebLink Posted",handler: { (alertActionOK) -> Void in
                             // then dismiss view
                             self.dismissViewControllerAnimated(true, completion: nil)
@@ -240,8 +296,8 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                     })
                 } else {
                     dispatch_async(dispatch_get_main_queue()){
-                        
-                        OTMClient.alertDialog(self, errorTitle: "Login Failed", action: "OK", errorMsg: "Facebook authorization cancelled")
+                        self.activityIndicatorView.stopAnimating()
+                        OTMClient.alertDialog(self, errorTitle: "WebLink Post Failed", action: "OK", errorMsg: errorString!)
                     }
                 }
             }

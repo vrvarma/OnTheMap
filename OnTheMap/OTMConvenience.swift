@@ -41,66 +41,73 @@ extension OTMClient{
     
     func doUdacityLogin(email: String!, password: String!, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
-        var parameters = [String : AnyObject] ()
         
-        let body = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
-        var headers : [String: String] = [
-            "Accept": "application/json",
-            "Content-Type": "application/json"]
-        let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body.dataUsingEncoding(NSUTF8StringEncoding)!) { JSONResult, error in
+        if IJReachability.isConnectedToNetwork(){
+            var parameters = [String : AnyObject] ()
             
-            /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+            let body = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
+            var headers : [String: String] = [
+                "Accept": "application/json",
+                "Content-Type": "application/json"]
+            let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body.dataUsingEncoding(NSUTF8StringEncoding)!) { JSONResult, error in
                 
-                completionHandler(success: false, errorString: error.localizedFailureReason!)
-            } else {
-                
-                var userdata = self.subdata(JSONResult as! NSData)
-                OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
-                    //If we failed to parse the data return the reason why
-                    if parseError != nil{
-                        
-                        completionHandler(success: false, errorString: parseError?.localizedDescription)
-                    }else{
-                        if let sessionData = JSONData["session"] as? NSDictionary{
-                            println(sessionData)
-                            //Save the session and user ids for future use
-                            self.sessionId = sessionData["id"]
-                            //We have to dig the user ID out of the account dictionary
-                            if let accountData = JSONData["account"] as? NSDictionary{
-                                self.userId = accountData["key"] as? String
-                                //We saved the ids so go ahead and grab our user data for later
-                                self.getUdacityInfo({ (success, errorString) -> Void in
-                                    if success{
-                                        completionHandler(success: success
-                                            , errorString: errorString)
-                                    }else{
-                                        completionHandler(success: success
-                                            , errorString: errorString)
-                                        
-                                    }
-                                })
-                            }else{
-                                //Failed to get the userID, so return a generic error
-                                completionHandler(success: false, errorString: "Unable to obtain UserID. Please re-try login.")
-                            }
+                /* 3. Send the desired value(s) to completion handler */
+                if error != nil {
+                    
+                    completionHandler(success: false, errorString: error!.localizedFailureReason!)
+                } else {
+                    
+                    var userdata = self.subdata(JSONResult as! NSData)
+                    OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
+                        //If we failed to parse the data return the reason why
+                        if parseError != nil{
+                            
+                            completionHandler(success: false, errorString: parseError?.localizedDescription)
                         }else{
-                            if let sessionError = JSONData["error"] as? String{
-                                println(JSONData)
-                                //We got an error, but Udacity sends some different messages. Let's pretty those up
-                                //Fromat the error if needed
-                                var formattedError = self.formatError(sessionError)
-                                //And then show it
-                                completionHandler(success: false, errorString: formattedError)
+                            if let sessionData = JSONData["session"] as? NSDictionary{
+                                println(sessionData)
+                                //Save the session and user ids for future use
+                                self.sessionId = sessionData["id"]
+                                //We have to dig the user ID out of the account dictionary
+                                if let accountData = JSONData["account"] as? NSDictionary{
+                                    self.userId = accountData["key"] as? String
+                                    //We saved the ids so go ahead and grab our user data for later
+                                    self.getUdacityInfo({ (success, errorString) -> Void in
+                                        if success{
+                                            completionHandler(success: success
+                                                , errorString: errorString)
+                                        }else{
+                                            completionHandler(success: success
+                                                , errorString: errorString)
+                                            
+                                        }
+                                    })
+                                }else{
+                                    //Failed to get the userID, so return a generic error
+                                    completionHandler(success: false, errorString: "Unable to obtain UserID. Please re-try login.")
+                                }
                             }else{
-                                //Failed to get the sessionID some other way, so return a generic error
-                                completionHandler(success: false, errorString: "Unable to obtain Session ID. Please re-try login.")
+                                if let sessionError = JSONData["error"] as? String{
+                                    println(JSONData)
+                                    //We got an error, but Udacity sends some different messages. Let's pretty those up
+                                    //Fromat the error if needed
+                                    var formattedError = self.formatError(sessionError)
+                                    //And then show it
+                                    completionHandler(success: false, errorString: formattedError)
+                                }else{
+                                    //Failed to get the sessionID some other way, so return a generic error
+                                    completionHandler(success: false, errorString: "Unable to obtain Session ID. Please re-try login.")
+                                }
                             }
                         }
                     }
+                    
                 }
-                
             }
+        }else{
+            
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
+            
         }
         
     }
@@ -119,158 +126,177 @@ extension OTMClient{
     
     func facebookLogin(completionHandler: (success: Bool, errorString: String?) -> Void){
         
-        
-        var headers : [String: String] = [
-            "Accept": "application/json",
-            "Content-Type": "application/json"]
-        
-        var parameters = [String : AnyObject] ()
-        
-        var jsonBody: [String: AnyObject]
-        // facebook token
-        if FBSDKAccessToken.currentAccessToken() != nil {
+        if IJReachability.isConnectedToNetwork(){
             
-            // json body with Facebook access token
-            let token = FBSDKAccessToken.currentAccessToken().tokenString
-            var accessToken: [String: AnyObject] = ["access_token": token]
-            jsonBody = ["facebook_mobile": accessToken]
+            var headers : [String: String] = [
+                "Accept": "application/json",
+                "Content-Type": "application/json"]
             
-        } else {
+            var parameters = [String : AnyObject] ()
             
-            completionHandler(success: false, errorString: "Facebook couldn't authorize the user")
-            return
-        }
-        var jsonifyError: NSError? = nil
-        
-        let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
-        
-        let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body!) { JSONResult, error in
-            
-            /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+            var jsonBody: [String: AnyObject]
+            // facebook token
+            if FBSDKAccessToken.currentAccessToken() != nil {
                 
-                completionHandler(success: false, errorString: error.localizedFailureReason!)
+                // json body with Facebook access token
+                let token = FBSDKAccessToken.currentAccessToken().tokenString
+                var accessToken: [String: AnyObject] = ["access_token": token]
+                jsonBody = ["facebook_mobile": accessToken]
+                
+            } else {
+                
+                completionHandler(success: false, errorString: "Facebook couldn't authorize the user")
+                return
             }
-            else{
-                let newData = self.subdata(JSONResult as! NSData)
+            var jsonifyError: NSError? = nil
+            
+            let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+            
+            let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body!) { JSONResult, error in
                 
-                OTMClient.parseJSONWithCompletionHandler(newData) { (JSONData, parseError) in
-                    // println("JSON User Data: \(JSONData)")
+                /* 3. Send the desired value(s) to completion handler */
+                if error != nil {
                     
-                    if parseError != nil{
+                    completionHandler(success: false, errorString: error!.localizedFailureReason!)
+                }
+                else{
+                    let newData = self.subdata(JSONResult as! NSData)
+                    
+                    OTMClient.parseJSONWithCompletionHandler(newData) { (JSONData, parseError) in
+                        // println("JSON User Data: \(JSONData)")
                         
-                        completionHandler(success: false, errorString: parseError?.localizedDescription)
-                    }else{
-                        
-                        if let sessionData = JSONData["session"] as? NSDictionary{
-                            println(sessionData)
-                            //Save the session and user ids for future use
-                            self.sessionId = sessionData["id"]
-                            //save the userId from the account
-                            if let accountData = JSONData["account"] as? NSDictionary{
-                                self.userId = accountData["key"] as? String
-                                //We saved the ids so go ahead and grab our user data for later
-                                self.getUdacityInfo({ (success, errorString) -> Void in
-                                    if success{
-                                        completionHandler(success: success
-                                            , errorString: errorString)
-                                    }else{
-                                        completionHandler(success: success
-                                            , errorString: errorString)
-                                        
-                                    }
-                                })
-                            }else{
-                                //Failed to get the userID, so return a generic error
-                                completionHandler(success: false, errorString: "Unable to obtain UserID. Please re-try login.")
-                            }
+                        if parseError != nil{
+                            
+                            completionHandler(success: false, errorString: parseError?.localizedDescription)
                         }else{
-                            if let sessionError = JSONData["error"] as? String{
-                                
-                                //Format the error if needed
-                                var formattedError = self.formatError(sessionError)
-                                //And then show it
-                                completionHandler(success: false, errorString: formattedError)
+                            
+                            if let sessionData = JSONData["session"] as? NSDictionary{
+                                println(sessionData)
+                                //Save the session and user ids for future use
+                                self.sessionId = sessionData["id"]
+                                //save the userId from the account
+                                if let accountData = JSONData["account"] as? NSDictionary{
+                                    self.userId = accountData["key"] as? String
+                                    //We saved the ids so go ahead and grab our user data for later
+                                    self.getUdacityInfo({ (success, errorString) -> Void in
+                                        if success{
+                                            completionHandler(success: success
+                                                , errorString: errorString)
+                                        }else{
+                                            completionHandler(success: success
+                                                , errorString: errorString)
+                                            
+                                        }
+                                    })
+                                }else{
+                                    //Failed to get the userID, so return a generic error
+                                    completionHandler(success: false, errorString: "Unable to obtain UserID. Please re-try login.")
+                                }
                             }else{
-                                //Failed to get the sessionID some other way, so return a generic error
-                                completionHandler(success: false, errorString: "Unable to obtain Session ID. Please re-try login.")
+                                if let sessionError = JSONData["error"] as? String{
+                                    
+                                    //Format the error if needed
+                                    var formattedError = self.formatError(sessionError)
+                                    //And then show it
+                                    completionHandler(success: false, errorString: formattedError)
+                                }else{
+                                    //Failed to get the sessionID some other way, so return a generic error
+                                    completionHandler(success: false, errorString: "Unable to obtain Session ID. Please re-try login.")
+                                }
                             }
                         }
                     }
                 }
             }
+        }else{
+            
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
+            
         }
         
     }
     
     func getUdacityInfo(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
-        var parameters = [String : AnyObject] ()
-        var headers = [String: String]()
-        let task = taskForGETMethod(Constants.UdacityUserURL + self.userId!, parameters: parameters,headers:headers) { data, error in
-            
-            /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+        if IJReachability.isConnectedToNetwork(){
+            var parameters = [String : AnyObject] ()
+            var headers = [String: String]()
+            let task = taskForGETMethod(Constants.UdacityUserURL + self.userId!, parameters: parameters,headers:headers) { data, error in
                 
-                completionHandler(success: false, errorString: error.localizedFailureReason!)
-            }
-            else{
-                //subset the data and save the id after checking for errors
-                var userdata = self.subdata(data as! NSData)
-                OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
-                    //println("JSON User Data: \(JSONData)")
+                /* 3. Send the desired value(s) to completion handler */
+                if error != nil {
                     
-                    if parseError != nil{
+                    completionHandler(success: false, errorString: error!.localizedFailureReason!)
+                }
+                else{
+                    //subset the data and save the id after checking for errors
+                    var userdata = self.subdata(data as! NSData)
+                    OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
+                        //println("JSON User Data: \(JSONData)")
                         
-                        completionHandler(success: false, errorString: parseError!.localizedDescription)
-                    }else{
-                        
-                        if let userData = JSONData["user"] as? NSDictionary{
+                        if parseError != nil{
                             
-                            // println(userData)
-                            self.udacityUser.firstName = userData["first_name"] as? String
-                            self.udacityUser.lastName = userData["last_name"] as? String
-                            self.udacityUser.userId = self.userId
-                            self.udacityUser.weblink = userData["website_url"] as? String
+                            completionHandler(success: false, errorString: parseError!.localizedDescription)
+                        }else{
                             
-                            
-                            if let emailData = userData["email"] as? NSDictionary{
+                            if let userData = JSONData["user"] as? NSDictionary{
                                 
-                                self.udacityUser.Email = emailData["address"] as? String
-                                println(self.udacityUser.Email!)
-                                completionHandler(success: true, errorString: nil)
+                                // println(userData)
+                                self.udacityUser.firstName = userData["first_name"] as? String
+                                self.udacityUser.lastName = userData["last_name"] as? String
+                                self.udacityUser.userId = self.userId
+                                self.udacityUser.weblink = userData["website_url"] as? String
+                                
+                                
+                                if let emailData = userData["email"] as? NSDictionary{
+                                    
+                                    self.udacityUser.Email = emailData["address"] as? String
+                                    println(self.udacityUser.Email!)
+                                    completionHandler(success: true, errorString: nil)
+                                }
                             }
                         }
                     }
                 }
+                
             }
+        }else{
+            
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
             
         }
-        
     }
     
     //***************************************************
     func getStudentLocationData(completionHandler: (success: Bool, errorString: String?) -> Void){
         
-        getStudenLocationList(OTMClient.sharedInstance().limit,skip: OTMClient.sharedInstance().students.count,completionHandler:completionHandler)
-        
+        if IJReachability.isConnectedToNetwork(){
+            
+            getStudenLocationList(OTMClient.sharedInstance().limit,skip: OTMClient.sharedInstance().students.count,completionHandler:completionHandler)
+        }else{
+            
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
+            
+        }
     }
     
     func getStudenLocationList(limit:Int,skip:Int,completionHandler:(success:Bool,errorString: String?) ->Void){
         
-        println("limit = \(limit) skip=\(skip)")
+        println("limit = \(limit) skip=\(skip) cached student count \(self.students.count)")
+        //Set the headers
         var headers : [String: String] = [
             "X-Parse-Application-Id": Constants.ParseApplicationID,
             "X-Parse-REST-API-Key": Constants.RESTApiKey]
-        
+        //Set the parameters
         var parameters = ["skip":"\(skip)","limit":"\(limit)","order":"-updatedAt"]
         
+        //Invoke the task
         let task = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
             
-            /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+            /* Send the desired value(s) to completion handler */
+            if  error != nil {
                 
-                completionHandler(success: false, errorString: error.localizedFailureReason!)
+                completionHandler(success: false, errorString: error!.localizedFailureReason!)
             }else{
                 OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
                     //If we failed to parse the data return the reason why
@@ -293,84 +319,104 @@ extension OTMClient{
     // Post our location to parse ApI
     //
     func postMyLocation( completionHandler: (success: Bool, errorString: String?) -> Void){
-        // extract the lat and long from the location annotation
-        var headers : [String: String] = [
-            "X-Parse-Application-Id": Constants.ParseApplicationID,
-            "X-Parse-REST-API-Key": Constants.RESTApiKey,
-            "Content-Type":"application/json"]
         
-        var parameters = [String : AnyObject]()
-        //Create the string for posting
-        var jsonBody: [String: AnyObject]
-        jsonBody = ["uniqueKey": self.udacityUser.userId! as String,"firstName":self.udacityUser.firstName! as String,
-            "lastName": self.udacityUser.lastName! as String,
-            "mapString":self.udacityUser.mapString! as String,
-            "mediaURL":self.udacityUser.weblink! as String,
-            "latitude":self.udacityUser.latitude! as Double,
-            "longitude":self.udacityUser.longitude! as Double
-        ]
-        
-        if let objectid = self.udacityUser.objectId {
+        if IJReachability.isConnectedToNetwork(){
+            // extract the lat and long from the location annotation
+            var headers : [String: String] = [
+                "X-Parse-Application-Id": Constants.ParseApplicationID,
+                "X-Parse-REST-API-Key": Constants.RESTApiKey,
+                "Content-Type":"application/json"]
             
-            //Update the database.
-            var jsonifyError: NSError? = nil
-            let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
-            let task = taskForPUTMethod(Constants.ApiParseAPIURL+self.udacityUser.objectId!, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+            var parameters = [String : AnyObject]()
+            //Create the string for posting
+            var jsonBody: [String: AnyObject]
+            jsonBody = ["uniqueKey": self.udacityUser.userId! as String,"firstName":self.udacityUser.firstName! as String,
+                "lastName": self.udacityUser.lastName! as String,
+                "mapString":self.udacityUser.mapString! as String,
+                "mediaURL":self.udacityUser.weblink! as String,
+                "latitude":self.udacityUser.latitude! as Double,
+                "longitude":self.udacityUser.longitude! as Double
+            ]
+            
+            if let objectid = self.udacityUser.objectId {
                 
-                /* 3. Send the desired value(s) to completion handler */
-                if let error = error {
-                    
-                    completionHandler(success: false, errorString: error.localizedFailureReason!)
-                }else{
-                    
-                    OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
-                        //If we failed to parse the data return the reason why
-                        if parseError != nil{
-                            completionHandler(success: false, errorString: parseError!.localizedDescription)
-                        }else{
-                            
-                            if let sessionError = JSONData["error"] as? String{
-                                
-                                completionHandler(success: false, errorString: sessionError)
-                            }else{
-                                
-                                completionHandler(success: true, errorString: nil)
-                            }
-                        }
-                    }
-                }
+                updateParseApiLocation(parameters, headers: headers, jsonBody: jsonBody,completionHandler:completionHandler)
+            }else{
+                
+                createNewLocation(parameters, headers: headers, jsonBody: jsonBody,completionHandler:completionHandler)
             }
         }else{
             
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
             
-            var jsonifyError: NSError? = nil
-            let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
-            let task = taskForPOSTMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+        }
+    }
+    
+    //Update the User entry in the ParseApiLocation
+    private func updateParseApiLocation(parameters:[String:AnyObject!],headers:[String:String],jsonBody:[String: AnyObject],completionHandler: (success:Bool, errorString:String?) -> Void){
+        
+        //Update the database.
+        var jsonifyError: NSError? = nil
+        let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        let task = taskForPUTMethod(Constants.ApiParseAPIURL+self.udacityUser.objectId!, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if error != nil  {
                 
-                /* 3. Send the desired value(s) to completion handler */
-                if let error = error {
-                    
-                    completionHandler(success: false, errorString: error.localizedFailureReason!)
-                }else{
-                    
-                    OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
-                        //If we failed to parse the data return the reason why
-                        if parseError != nil{
-                            completionHandler(success: false, errorString: parseError!.localizedDescription)
+                completionHandler(success: false, errorString: error!.localizedFailureReason!)
+            }else{
+                
+                OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
+                    //If we failed to parse the data return the reason why
+                    if parseError != nil{
+                        completionHandler(success: false, errorString: parseError!.localizedDescription)
+                    }else{
+                        
+                        if let sessionError = JSONData["error"] as? String{
+                            
+                            completionHandler(success: false, errorString: sessionError)
                         }else{
                             
-                            if let sessionError = JSONData["error"] as? String{
-                                
-                                completionHandler(success: false, errorString: sessionError)
-                            }else{
-                                
-                                completionHandler(success: true, errorString: nil)
-                            }
+                            completionHandler(success: true, errorString: nil)
                         }
                     }
                 }
             }
         }
+    }
+    
+    //
+    //Insert a new entry in the ParseApiLocation database.
+    //
+    private func createNewLocation(parameters:[String:AnyObject!],headers:[String:String],jsonBody:[String: AnyObject],completionHandler: (success:Bool, errorString:String?) -> Void){
+        var jsonifyError: NSError? = nil
+        let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        let task = taskForPOSTMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+            
+            /* Send the desired value(s) to completion handler */
+            if error != nil {
+                
+                completionHandler(success: false, errorString: error!.localizedFailureReason!)
+            }else{
+                
+                OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
+                    //If we failed to parse the data return the reason why
+                    if parseError != nil{
+                        completionHandler(success: false, errorString: parseError!.localizedDescription)
+                    }else{
+                        
+                        if let sessionError = JSONData["error"] as? String{
+                            
+                            completionHandler(success: false, errorString: sessionError)
+                        }else{
+                            
+                            completionHandler(success: true, errorString: nil)
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     //
@@ -388,10 +434,10 @@ extension OTMClient{
         //Make the request
         let task = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
             
-            /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+            /* Send the desired value(s) to completion handler */
+            if error != nil {
                 
-                completionHandler(success: false, errorString: error.localizedFailureReason!)
+                completionHandler(success: false, errorString: error!.localizedFailureReason!)
             }else{
                 
                 OTMClient.parseJSONWithCompletionHandler(data as! NSData) { (JSONData, parseError) in
@@ -400,7 +446,7 @@ extension OTMClient{
                         completionHandler(success: false, errorString: parseError!.localizedDescription)
                     }else{
                         
-                       // println(JSONData)
+                        // println(JSONData)
                         var results = JSONData["results"] as! [[String : AnyObject]]
                         if results.count == 0 {
                             completionHandler(success: false, errorString: "User hasn't posted data")
@@ -419,49 +465,60 @@ extension OTMClient{
             }
         }
     }
-    //Logout from Udacity
-    func logoutFromUdacity(completionHandler:(success:Bool,errorString:String?)->Void){
+    
+    //
+    // Logout from application
+    // Logout out from facebook, if facebook authentication was used.
+    // Else logout from udacity.
+    //
+    func logout(completionHandler:(success:Bool,errorString:String?)->Void){
         
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            // clear facebook token
-            let loginManager = FBSDKLoginManager()
-            loginManager.logOut()
-            //FBSDKAccessToken.setCurrentAccessToken(nil)
-            // and clear session
-            self.clearSession()
-            self.deleteSession()
-            
-            println("Facebook: logged out, token cleared")
-            completionHandler(success: true,errorString:nil)
-        }else{
-            let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-            request.HTTPMethod = "DELETE"
-            var xsrfCookie: NSHTTPCookie? = nil
-            let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-            for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
-                if cookie.name == "XSRF-TOKEN" {
-                    xsrfCookie = cookie
+        if IJReachability.isConnectedToNetwork(){
+            if FBSDKAccessToken.currentAccessToken() != nil {
+                // clear facebook token
+                let loginManager = FBSDKLoginManager()
+                loginManager.logOut()
+                //FBSDKAccessToken.setCurrentAccessToken(nil)
+                // and clear session
+                self.clearSession()
+                //println("Facebook: logged out, token cleared")
+                completionHandler(success: true,errorString:nil)
+            }else{
+                
+                //Log out from Udacity
+                
+                let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+                request.HTTPMethod = "DELETE"
+                var xsrfCookie: NSHTTPCookie? = nil
+                let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+                for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
+                    if cookie.name == "XSRF-TOKEN" {
+                        xsrfCookie = cookie
+                    }
                 }
-            }
-            if let xsrfCookie = xsrfCookie {
-                request.addValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-Token")
-            }
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithRequest(request) { data, response, error in
-                if error != nil {
-                    // Handle error…
-                    completionHandler(success: false,errorString: error!.localizedDescription)
+                if let xsrfCookie = xsrfCookie {
+                    request.addValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-Token")
+                }
+                let session = NSURLSession.sharedSession()
+                let task = session.dataTaskWithRequest(request) { data, response, error in
                     
+                    if error != nil {
+                        // Handle error…
+                        completionHandler(success: false,errorString: error!.localizedDescription)
+                        
+                    }
+                    else{
+                        // and clear session
+                        self.clearSession()
+                                                completionHandler(success: true,errorString: nil)
+                    }
                 }
-                else{
-                    // and clear session
-                    self.clearSession()
-                    self.deleteSession()
-                    completionHandler(success: true,errorString: nil)
-                }
+                task.resume()
             }
-            task.resume()
+        } else{
+            
+            completionHandler(success: false, errorString: "Unable to connect to Internet!.")
+            
         }
     }
-    
 }

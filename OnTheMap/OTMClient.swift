@@ -30,8 +30,6 @@ class OTMClient : NSObject {
         super.init()
     }
     
-   
-    
     //Shared Instance
     class func sharedInstance() -> OTMClient {
         
@@ -41,8 +39,6 @@ class OTMClient : NSObject {
         
         return Singleton.sharedInstance
     }
-    
-    
     
     /* Helper: Substitute the key for the value that is contained within the method name */
     class func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
@@ -56,7 +52,8 @@ class OTMClient : NSObject {
     //Reset the data thats being cached
     func resetDataModel() {
         
-        println("Reset data ")
+        //println("Reset data ")
+        students.removeAll()
         students = [StudentInformation]()
         
     }
@@ -65,11 +62,7 @@ class OTMClient : NSObject {
         
         self.sessionId = nil
         self.userId = nil
-        self.students = [StudentInformation]()
-    }
-    
-    func deleteSession() {
-        
+        resetDataModel()
         FBSDKAccessToken.setCurrentAccessToken(nil)
     }
 }

@@ -88,7 +88,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     
     @IBAction func logout(sender: UIBarButtonItem) {
         
-        OTMClient.sharedInstance().logoutFromUdacity() {success, errorString in
+        OTMClient.sharedInstance().logout() {success, errorString in
             
             if success{
                 
@@ -109,6 +109,8 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         retrieveUserLocation()
     }
     
+    //Method to check whether the user already exists in the
+    //Parse API database.
     func retrieveUserLocation(){
         OTMClient.sharedInstance().retrieveMyLocation(){ (success, errorString) in
             if success {
@@ -125,6 +127,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         }
     }
     
+    //Alert dialog to confirm with the user that he/she wants to overwrite the data
     func buildAlertDialog() -> UIAlertController{
         
         var confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -141,6 +144,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         return confirm
     }
     
+    //Method to show the InfoPositonViewController
     func showInfoPositionView(){
         dispatch_async(dispatch_get_main_queue()) {
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPositionViewController") as! InfoPositionViewController

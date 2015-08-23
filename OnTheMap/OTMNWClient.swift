@@ -62,7 +62,7 @@ extension OTMClient{
                 request.addValue(value, forHTTPHeaderField: key)
             }
         }
-        println(request)
+        //println(request)
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
@@ -143,7 +143,7 @@ extension OTMClient{
         //println(jsonBody)
         request.HTTPBody = jsonBody as? NSData
         
-        println(request)
+        //println(request)
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
