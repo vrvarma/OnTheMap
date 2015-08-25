@@ -296,6 +296,7 @@
                     <connections>
                         <segue destination="GpK-G8-CoQ" kind="relationship" relationship="viewControllers" id="KUe-dw-IdX"/>
                         <segue destination="eNV-HZ-WhD" kind="relationship" relationship="viewControllers" id="W9u-wk-kCd"/>
+                        <segue destination="7kt-x2-npd" kind="relationship" relationship="viewControllers" id="aKC-oj-6yf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YIz-DH-TxM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -465,8 +466,111 @@
             </objects>
             <point key="canvasLocation" x="-2629" y="-6001"/>
         </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="Znl-ta-P89">
+            <objects>
+                <collectionViewController id="jYH-Vd-aTt" customClass="CollectionViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LaO-EA-Rlg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P10-NG-gn1">
+                            <size key="itemSize" width="100" height="100"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OTMCollectionViewCell" id="ZfR-R6-VQ4" customClass="OTMCollectionViewCell" customModule="OnTheMap" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="nameLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9z9-QF-FCf">
+                                            <rect key="frame" x="8" y="21" width="71" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="urlLabel" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K31-Dx-H3S">
+                                            <rect key="frame" x="8" y="62" width="84" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="locationLabel" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3et-0t-iRM">
+                                            <rect key="frame" x="8" y="39" width="71" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="0.92941176469999998" green="0.46274509800000002" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="fullNameLabel" destination="9z9-QF-FCf" id="5lU-Oy-UxA"/>
+                                    <outlet property="locationLabel" destination="3et-0t-iRM" id="r47-P3-dx7"/>
+                                    <outlet property="urlLabel" destination="K31-Dx-H3S" id="FsN-bI-8RK"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="jYH-Vd-aTt" id="7N5-Y6-YPH"/>
+                            <outlet property="delegate" destination="jYH-Vd-aTt" id="hlV-pD-HIY"/>
+                        </connections>
+                    </collectionView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="ueh-Nt-zLq">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="YvR-UH-pPM">
+                            <connections>
+                                <action selector="logout:" destination="jYH-Vd-aTt" id="axs-9H-U1G"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="post" destination="SJU-bK-Olo" id="A4I-Sb-wto"/>
+                        <outlet property="refresh" destination="b3O-Bg-a0l" id="JjL-il-LGu"/>
+                    </connections>
+                </collectionViewController>
+                <barButtonItem systemItem="refresh" id="b3O-Bg-a0l">
+                    <connections>
+                        <action selector="refresh:" destination="jYH-Vd-aTt" id="KbJ-Vm-uM8"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="pin" id="SJU-bK-Olo" userLabel="Post">
+                    <connections>
+                        <action selector="postPosition:" destination="jYH-Vd-aTt" id="tWR-IJ-Af1"/>
+                    </connections>
+                </barButtonItem>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tKY-hU-dvR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3316" y="-4639"/>
+        </scene>
+        <!--Collection-->
+        <scene sceneID="IEq-d5-vru">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7kt-x2-npd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Collection" image="collection_30x30" id="1cP-bE-sgP"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qU6-0K-fPL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jYH-Vd-aTt" kind="relationship" relationship="rootViewController" id="gQp-GK-uum"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="drI-WX-8iL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4043" y="-4639"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="collection_30x30" width="30" height="30"/>
         <image name="list" width="32" height="32"/>
         <image name="map" width="32" height="32"/>
         <image name="pin" width="32" height="32"/>

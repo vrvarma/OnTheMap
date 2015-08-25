@@ -126,6 +126,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
                 OTMClient.alertDialog(self, errorTitle: "Error Retrieving data", action: "OK", errorMsg: errorString!)
             }
         }
+        isRefreshData = false
     }
     
     @IBAction func refresh(sender: UIBarButtonItem) {
@@ -188,8 +189,9 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     func showInfoPositionView(){
         dispatch_async(dispatch_get_main_queue()) {
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPositionViewController") as! InfoPositionViewController
-            self.presentViewController(controller, animated: true, completion: nil)
-            self.isRefreshData = true
+            self.presentViewController(controller, animated: true, completion: {
+                self.isRefreshData = true
+            })
         }
     }
 }

@@ -1,15 +1,15 @@
 //
-//  TableViewController.swift
+//  CollectionViewController.swift
 //  OnTheMap
 //
-//  Created by Vikas Varma on 8/16/15.
+//  Created by Vikas Varma on 8/24/15.
 //  Copyright (c) 2015 Vikas Varma. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class TableViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate{
+class CollectionViewController : UICollectionViewController{
+    
     
     @IBOutlet var refresh: UIBarButtonItem!
     @IBOutlet var post: UIBarButtonItem!
@@ -25,7 +25,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(true)
-        tableView.reloadData()
+        collectionView!.reloadData()
     }
     
     override func viewDidLoad() {
@@ -46,7 +46,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
                 dispatch_async(dispatch_get_main_queue()) {
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    self.tableView.reloadData()
+                    self.collectionView?.reloadData()
                     
                 }
             }else {
@@ -58,7 +58,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
                 }
             }
         }
-        isRefreshData = false
+        self.isRefreshData = false
     }
     
     @IBAction func refresh(sender: UIBarButtonItem) {
@@ -66,39 +66,46 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         isRefreshData = true
         refreshData()
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    //CollectionView Delegate Methods
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("OTMCollectionViewCell", forIndexPath: indexPath) as! OTMCollectionViewCell
+        
+        // Configure the cell
+        let student = OTMClient.sharedInstance().students[indexPath.row]
+        
+        cell.fullNameLabel?.text = "\(student.firstName) \(student.lastName)"
+        cell.urlLabel?.text = student.mediaURL
+        cell.locationLabel?.text = student.mapString
+        
+        return cell
+        
+    }
+    
+    //To return the student count
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return OTMClient.sharedInstance().students.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    //Handle the cell selection code.
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as! UITableViewCell
-        //get the info
-        let student = OTMClient.sharedInstance().students[indexPath.row]
-        //Populate the cell graphic
-        cell.imageView!.image = UIImage(named: "pin")
-        //Student name
-        cell.textLabel?.text = "\(student.firstName) \(student.lastName)"
-        cell.detailTextLabel!.text = "\(student.mapString)"
-        return cell
-    }
-    
-    //The user selected a cell
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //get the info
-        let student = OTMClient.sharedInstance().students[indexPath.row]
-        let app = UIApplication.sharedApplication()
-        var mapString = student.mediaURL
-        if !mapString.hasPrefix("http") {
+        if let collectionCell = collectionView.cellForItemAtIndexPath(indexPath) {
             
-            mapString = "http://"+mapString
+            let cell = collectionCell as! OTMCollectionViewCell
+            var mapString = cell.urlLabel!.text!
+            if !mapString.hasPrefix("http") {
+                
+                mapString = "http://"+mapString
+            }
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: mapString)!)
         }
-        //Show the user's weblink
-        app.openURL(NSURL(string: mapString)!)
-        
     }
     
+    //Logout
     @IBAction func logout(sender: UIBarButtonItem) {
         
         OTMClient.sharedInstance().logout() {success, errorString in
@@ -118,6 +125,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         }
     }
     
+    //create or update a new location in parse api
     @IBAction func postPosition(sender: UIBarButtonItem) {
         retrieveUserLocation()
     }
@@ -125,6 +133,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     //Method to check whether the user already exists in the
     //Parse API database.
     func retrieveUserLocation(){
+        
         OTMClient.sharedInstance().retrieveMyLocation(){ (success, errorString) in
             if success {
                 
@@ -164,7 +173,6 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
             self.presentViewController(controller, animated: true, completion: {
                 self.isRefreshData = true
             })
-            
         }
     }
 }

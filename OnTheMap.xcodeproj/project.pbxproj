@@ -29,6 +29,8 @@
 		1D8FFCEE1B7C4C75003C6DAD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */; };
 		1D8FFCF01B7C4D45003C6DAD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */; };
 		1D8FFCF41B7C5D00003C6DAD /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */; };
+		1DF189311B8C0C0E0057F10D /* OTMCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF189301B8C0C0E0057F10D /* OTMCollectionViewCell.swift */; };
+		1DF189331B8C0C800057F10D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF189321B8C0C800057F10D /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		1DF189301B8C0C0E0057F10D /* OTMCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMCollectionViewCell.swift; sourceTree = "<group>"; };
+		1DF189321B8C0C800057F10D /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */,
+				1DF189301B8C0C0E0057F10D /* OTMCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 				1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */,
 				1D3334F21B813DA300ED9CB8 /* TableViewController.swift */,
 				1D8903FB1B82D11800DE663D /* InfoPositionViewController.swift */,
+				1DF189321B8C0C800057F10D /* CollectionViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -334,6 +340,8 @@
 				1D1C09221B6E92AA005EB0A9 /* LoginViewController.swift in Sources */,
 				1D8FFCF41B7C5D00003C6DAD /* BorderedButton.swift in Sources */,
 				1D3334F31B813DA300ED9CB8 /* TableViewController.swift in Sources */,
+				1DF189331B8C0C800057F10D /* CollectionViewController.swift in Sources */,
+				1DF189311B8C0C0E0057F10D /* OTMCollectionViewCell.swift in Sources */,
 				1D8904061B879BB000DE663D /* OTMNWClient.swift in Sources */,
 				1D8903FC1B82D11800DE663D /* InfoPositionViewController.swift in Sources */,
 				1D1C09431B6E939B005EB0A9 /* OTMClient.swift in Sources */,
