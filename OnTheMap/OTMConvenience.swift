@@ -268,7 +268,7 @@ extension OTMClient{
         }
     }
     
-    //***************************************************
+    //Get studentLocationData
     func getStudentLocationData(completionHandler: (success: Bool, errorString: String?) -> Void){
         
         if IJReachability.isConnectedToNetwork(){
@@ -281,7 +281,7 @@ extension OTMClient{
         }
     }
     
-    func getStudenLocationList(limit:Int,skip:Int,completionHandler:(success:Bool,errorString: String?) ->Void){
+    private func getStudenLocationList(limit:Int,skip:Int,completionHandler:(success:Bool,errorString: String?) ->Void){
         
         println("limit = \(limit) skip=\(skip) cached student count \(self.students.count)")
         //Set the headers
@@ -519,7 +519,6 @@ extension OTMClient{
         } else{
             
             completionHandler(success: false, errorString: "Unable to connect to Internet!.")
-            
         }
     }
 }

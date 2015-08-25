@@ -295,9 +295,10 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                         // stop the activity indicator
                         self.activityIndicatorView.stopAnimating()
                         OTMClient.alertDialogWithHandler(self, errorTitle: "Success", action: "OK", errorMsg: "WebLink Posted",handler: { (alertActionOK) -> Void in
+                            
+                            self.submitUIView(true)
                             // then dismiss view
                             self.dismissViewControllerAnimated(true, completion: nil)
-                            
                         })
                     })
                 } else {
@@ -307,7 +308,6 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                             
                             self.submitUIView(true)
                         })
-                        
                     }
                 }
             }
@@ -321,12 +321,12 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         if enable {
             alphaValue = 1.0
         }
-        dispatch_async(dispatch_get_main_queue()){
-            self.showBrowserButton.alpha = alphaValue
-            self.submitButton.alpha = alphaValue
-            self.webView.alpha = alphaValue
-            self.mapView.alpha = alphaValue
-        }
+        
+        showBrowserButton.alpha = alphaValue
+        submitButton.alpha = alphaValue
+        webView.alpha = alphaValue
+        mapView.alpha = alphaValue
+        
     }
     
 }
