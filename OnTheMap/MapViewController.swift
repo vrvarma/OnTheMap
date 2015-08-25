@@ -163,6 +163,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
                 })
             }else{
                 //User doesn't exist in parse database
+                OTMClient.sharedInstance().udacityUser.objectId = nil
                 self.showInfoPositionView()
             }
         }

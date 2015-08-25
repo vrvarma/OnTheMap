@@ -143,6 +143,7 @@ class CollectionViewController : UICollectionViewController{
                     self.presentViewController(alertController, animated: true, completion: nil)
                 })
             }else{
+                OTMClient.sharedInstance().udacityUser.objectId = nil
                 //User doesn't exist in parse database
                 self.showInfoPositionView()
             }

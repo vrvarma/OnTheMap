@@ -62,6 +62,7 @@ class OTMClient : NSObject {
         
         self.sessionId = nil
         self.userId = nil
+        self.udacityUser.objectId = nil
         resetDataModel()
         FBSDKAccessToken.setCurrentAccessToken(nil)
     }

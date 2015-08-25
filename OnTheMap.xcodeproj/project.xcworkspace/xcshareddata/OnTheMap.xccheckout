@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>73173CF1-6A93-4B7A-A92A-30837D50912C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>OnTheMap</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9644101A9DB59099E15FD6637CF20558102F9181</key>
 		<string>https://github.com/vrvarma/OnTheMap.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>OnTheMap.xcodeproj/project.xcworkspace</string>
+	<string>OnTheMap.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9644101A9DB59099E15FD6637CF20558102F9181</key>
