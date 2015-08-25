@@ -39,7 +39,7 @@ public class IJReachability {
         let isReachable = (flags & UInt32(kSCNetworkFlagsReachable)) != 0
         let needsConnection = (flags & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         
-        return (isReachable && !needsConnection) ? true : false
+        return (isReachable && !needsConnection) ? true : false        
     }
     
     public class func isConnectedToNetworkOfType() -> IJReachabilityType {

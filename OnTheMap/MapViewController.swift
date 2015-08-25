@@ -18,6 +18,8 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     @IBOutlet var post: UIBarButtonItem!
     @IBOutlet var refresh: UIBarButtonItem!
     
+    var isRefreshData = false
+    
     var annotations = [MKPointAnnotation]()
     
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
@@ -99,6 +101,10 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     //Method to retrieve the data
     private func refreshData(){
         
+        if isRefreshData {
+            OTMClient.sharedInstance().resetDataModel()
+        }
+        
         activityIndicatorView.startAnimating()
         OTMClient.sharedInstance().getStudentLocationData() {success, errorString in
             
@@ -125,7 +131,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     @IBAction func refresh(sender: UIBarButtonItem) {
         
         //Get a fresh set of data
-        OTMClient.sharedInstance().resetDataModel()
+        isRefreshData = true
         refreshData()
     }
 
@@ -183,6 +189,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         dispatch_async(dispatch_get_main_queue()) {
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPositionViewController") as! InfoPositionViewController
             self.presentViewController(controller, animated: true, completion: nil)
+            self.isRefreshData = true
         }
     }
 }

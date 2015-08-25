@@ -43,6 +43,7 @@ extension OTMClient{
         
         
         if IJReachability.isConnectedToNetwork(){
+            
             var parameters = [String : AnyObject] ()
             
             let body = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
@@ -52,9 +53,9 @@ extension OTMClient{
             let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body.dataUsingEncoding(NSUTF8StringEncoding)!) { JSONResult, error in
                 
                 /* 3. Send the desired value(s) to completion handler */
-                if error != nil {
+                if  error != nil {
                     
-                    completionHandler(success: false, errorString: error!.localizedFailureReason!)
+                    completionHandler(success: false, errorString: error?.localizedFailureReason!)
                 } else {
                     
                     var userdata = self.subdata(JSONResult as! NSData)
@@ -510,7 +511,7 @@ extension OTMClient{
                     else{
                         // and clear session
                         self.clearSession()
-                                                completionHandler(success: true,errorString: nil)
+                        completionHandler(success: true,errorString: nil)
                     }
                 }
                 task.resume()

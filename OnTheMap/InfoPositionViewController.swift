@@ -74,7 +74,9 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         }
         else{
             
+            
             activityIndicatorView.startAnimating()
+            findOnMapButton.alpha = 0.2
             
             getLocationFromString(locationTextField.text, withCompletion: { (location, error) -> () in
                 
@@ -86,6 +88,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                         
                         (alertActionOK) -> Void in
                         self.findOnMapButton.hidden = false
+                        self.findOnMapButton.alpha = 1.0
                     })
                 } else {
                     
@@ -103,7 +106,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                         annotation.title = "\(OTMClient.sharedInstance().udacityUser.firstName!) \(OTMClient.sharedInstance().udacityUser.lastName!)"
                         annotation.subtitle = OTMClient.sharedInstance().udacityUser.weblink
                         
-                        self.urlTextField.text = OTMClient.sharedInstance().udacityUser.weblink
+                        //self.urlTextField.text = OTMClient.sharedInstance().udacityUser.weblink
                         
                         self.mapView.hidden=false
                         self.urlTextField.hidden = false
@@ -131,7 +134,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         
         isUrlValid = enabled
         submitButton.enabled = enabled
-        submitButton.alpha = enabled ? 1.0:0.2
+        submitButton.alpha = enabled ? 1.0 : 0.2
     }
     
     //Method to get the longitude and latitude
@@ -280,6 +283,8 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
             
             activityIndicatorView.startAnimating()
             
+            submitUIView(false)
+            
             OTMClient.sharedInstance().udacityUser.weblink = urlTextField.text
             
             OTMClient.sharedInstance().postMyLocation(){ (success, errorString) in
@@ -292,15 +297,36 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                         OTMClient.alertDialogWithHandler(self, errorTitle: "Success", action: "OK", errorMsg: "WebLink Posted",handler: { (alertActionOK) -> Void in
                             // then dismiss view
                             self.dismissViewControllerAnimated(true, completion: nil)
+                            
                         })
                     })
                 } else {
                     dispatch_async(dispatch_get_main_queue()){
                         self.activityIndicatorView.stopAnimating()
-                        OTMClient.alertDialog(self, errorTitle: "WebLink Post Failed", action: "OK", errorMsg: errorString!)
+                        OTMClient.alertDialogWithHandler(self, errorTitle: "WebLink Post Failed", action: "OK", errorMsg: errorString!,handler:{(alertActionOK) -> Void in
+                            
+                            self.submitUIView(true)
+                        })
+                        
                     }
                 }
             }
         }
     }
+    
+    private func submitUIView(enable : Bool)
+    {
+        
+        var alphaValue : CGFloat = 0.2
+        if enable {
+            alphaValue = 1.0
+        }
+        dispatch_async(dispatch_get_main_queue()){
+            self.showBrowserButton.alpha = alphaValue
+            self.submitButton.alpha = alphaValue
+            self.webView.alpha = alphaValue
+            self.mapView.alpha = alphaValue
+        }
+    }
+    
 }

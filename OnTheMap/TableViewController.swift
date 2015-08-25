@@ -14,6 +14,8 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     @IBOutlet var refresh: UIBarButtonItem!
     @IBOutlet var post: UIBarButtonItem!
     
+    var isRefreshData = false
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(true)
@@ -34,6 +36,10 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     
     func refreshData(){
         
+        if isRefreshData {
+            
+            OTMClient.sharedInstance().resetDataModel()
+        }
         OTMClient.sharedInstance().getStudentLocationData() {success, errorString in
             if success{
                 dispatch_async(dispatch_get_main_queue()) {
@@ -50,7 +56,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     
     @IBAction func refresh(sender: UIBarButtonItem) {
         
-        OTMClient.sharedInstance().resetDataModel()
+        isRefreshData = true
         refreshData()
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -149,6 +155,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         dispatch_async(dispatch_get_main_queue()) {
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPositionViewController") as! InfoPositionViewController
             self.presentViewController(controller, animated: true, completion: nil)
+            self.isRefreshData = true
         }
     }
 }
