@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TableViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate{
+class TableViewController: UITableViewController{
     
     @IBOutlet var refresh: UIBarButtonItem!
     @IBOutlet var post: UIBarButtonItem!
@@ -73,7 +73,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as UITableViewCell!
         //get the info
         let student = OTMClient.sharedInstance().students[indexPath.row]
         //Populate the cell graphic
@@ -144,7 +144,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
     //Alert dialog to confirm with the user that he/she wants to overwrite the data
     func buildAlertDialog() -> UIAlertController{
         
-        var confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
+        let confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
         
         //Overwrite button just closes the dialog
         confirm.addAction(UIAlertAction(title: "Overwrite",style: UIAlertActionStyle.Default, handler: {
@@ -153,7 +153,7 @@ class TableViewController: UITableViewController, UITableViewDataSource, UITable
         }))
         
         //Cancel button
-        var alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
+        let alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
         confirm.addAction(alertCancel)
         return confirm
     }

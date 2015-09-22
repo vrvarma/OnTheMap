@@ -44,13 +44,13 @@ extension OTMClient{
         
         if IJReachability.isConnectedToNetwork(){
             
-            var parameters = [String : AnyObject] ()
+            let parameters = [String : AnyObject] ()
             
             let body = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}"
-            var headers : [String: String] = [
+            let headers : [String: String] = [
                 "Accept": "application/json",
                 "Content-Type": "application/json"]
-            let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body.dataUsingEncoding(NSUTF8StringEncoding)!) { JSONResult, error in
+            taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body.dataUsingEncoding(NSUTF8StringEncoding)!) { JSONResult, error in
                 
                 /* 3. Send the desired value(s) to completion handler */
                 if  error != nil {
@@ -58,7 +58,7 @@ extension OTMClient{
                     completionHandler(success: false, errorString: error?.localizedFailureReason!)
                 } else {
                     
-                    var userdata = self.subdata(JSONResult as! NSData)
+                    let userdata = self.subdata(JSONResult as! NSData)
                     OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
                         //If we failed to parse the data return the reason why
                         if parseError != nil{
@@ -66,7 +66,7 @@ extension OTMClient{
                             completionHandler(success: false, errorString: parseError?.localizedDescription)
                         }else{
                             if let sessionData = JSONData["session"] as? NSDictionary{
-                                println(sessionData)
+                                print(sessionData)
                                 //Save the session and user ids for future use
                                 self.sessionId = sessionData["id"]
                                 //We have to dig the user ID out of the account dictionary
@@ -89,10 +89,10 @@ extension OTMClient{
                                 }
                             }else{
                                 if let sessionError = JSONData["error"] as? String{
-                                    println(JSONData)
+                                    print(JSONData)
                                     //We got an error, but Udacity sends some different messages. Let's pretty those up
                                     //Fromat the error if needed
-                                    var formattedError = self.formatError(sessionError)
+                                    let formattedError = self.formatError(sessionError)
                                     //And then show it
                                     completionHandler(success: false, errorString: formattedError)
                                 }else{
@@ -129,11 +129,11 @@ extension OTMClient{
         
         if IJReachability.isConnectedToNetwork(){
             
-            var headers : [String: String] = [
+            let headers : [String: String] = [
                 "Accept": "application/json",
                 "Content-Type": "application/json"]
             
-            var parameters = [String : AnyObject] ()
+            let parameters = [String : AnyObject] ()
             
             var jsonBody: [String: AnyObject]
             // facebook token
@@ -141,7 +141,8 @@ extension OTMClient{
                 
                 // json body with Facebook access token
                 let token = FBSDKAccessToken.currentAccessToken().tokenString
-                var accessToken: [String: AnyObject] = ["access_token": token]
+                print("facebook token "+token)
+                let accessToken: [String: AnyObject] = ["access_token": token]
                 jsonBody = ["facebook_mobile": accessToken]
                 
             } else {
@@ -149,11 +150,17 @@ extension OTMClient{
                 completionHandler(success: false, errorString: "Facebook couldn't authorize the user")
                 return
             }
-            var jsonifyError: NSError? = nil
+           var jsonifyError: NSError? = nil
             
-            let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+            let body: NSData?
+            do {
+                body = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+            } catch let error as NSError {
+                jsonifyError = error
+                body = nil
+            }
             
-            let task = taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body!) { JSONResult, error in
+            taskForPOSTMethod(OTMClient.Constants.UdacitySessionURL, parameters: parameters,headers:headers, jsonBody: body!) { JSONResult, error in
                 
                 /* 3. Send the desired value(s) to completion handler */
                 if error != nil {
@@ -164,7 +171,7 @@ extension OTMClient{
                     let newData = self.subdata(JSONResult as! NSData)
                     
                     OTMClient.parseJSONWithCompletionHandler(newData) { (JSONData, parseError) in
-                        // println("JSON User Data: \(JSONData)")
+                         print("JSON User Data: \(JSONData)")
                         
                         if parseError != nil{
                             
@@ -172,7 +179,7 @@ extension OTMClient{
                         }else{
                             
                             if let sessionData = JSONData["session"] as? NSDictionary{
-                                println(sessionData)
+                                print(sessionData)
                                 //Save the session and user ids for future use
                                 self.sessionId = sessionData["id"]
                                 //save the userId from the account
@@ -197,7 +204,7 @@ extension OTMClient{
                                 if let sessionError = JSONData["error"] as? String{
                                     
                                     //Format the error if needed
-                                    var formattedError = self.formatError(sessionError)
+                                    let formattedError = self.formatError(sessionError)
                                     //And then show it
                                     completionHandler(success: false, errorString: formattedError)
                                 }else{
@@ -220,9 +227,9 @@ extension OTMClient{
     func getUdacityInfo(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         if IJReachability.isConnectedToNetwork(){
-            var parameters = [String : AnyObject] ()
-            var headers = [String: String]()
-            let task = taskForGETMethod(Constants.UdacityUserURL + self.userId!, parameters: parameters,headers:headers) { data, error in
+            let parameters = [String : AnyObject] ()
+            let headers = [String: String]()
+            _ = taskForGETMethod(Constants.UdacityUserURL + self.userId!, parameters: parameters,headers:headers) { data, error in
                 
                 /* 3. Send the desired value(s) to completion handler */
                 if error != nil {
@@ -231,7 +238,7 @@ extension OTMClient{
                 }
                 else{
                     //subset the data and save the id after checking for errors
-                    var userdata = self.subdata(data as! NSData)
+                    let userdata = self.subdata(data as! NSData)
                     OTMClient.parseJSONWithCompletionHandler(userdata) { (JSONData, parseError) in
                         //println("JSON User Data: \(JSONData)")
                         
@@ -252,7 +259,7 @@ extension OTMClient{
                                 if let emailData = userData["email"] as? NSDictionary{
                                     
                                     self.udacityUser.Email = emailData["address"] as? String
-                                    println(self.udacityUser.Email!)
+                                    print(self.udacityUser.Email!)
                                     completionHandler(success: true, errorString: nil)
                                 }
                             }
@@ -283,16 +290,16 @@ extension OTMClient{
     
     private func getStudenLocationList(limit:Int,skip:Int,completionHandler:(success:Bool,errorString: String?) ->Void){
         
-        println("limit = \(limit) skip=\(skip) cached student count \(self.students.count)")
+        print("limit = \(limit) skip=\(skip) cached student count \(self.students.count)")
         //Set the headers
-        var headers : [String: String] = [
+        let headers : [String: String] = [
             "X-Parse-Application-Id": Constants.ParseApplicationID,
             "X-Parse-REST-API-Key": Constants.RESTApiKey]
         //Set the parameters
-        var parameters = ["skip":"\(skip)","limit":"\(limit)","order":"-updatedAt"]
+        let parameters = ["skip":"\(skip)","limit":"\(limit)","order":"-updatedAt"]
         
         //Invoke the task
-        let task = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
+        _ = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
             
             /* Send the desired value(s) to completion handler */
             if  error != nil {
@@ -306,7 +313,7 @@ extension OTMClient{
                         //We seem to have gotten the info, so extract and save it
                     }else{
                         
-                        var results = JSONData["results"] as! [[String : AnyObject]]
+                        let results = JSONData["results"] as! [[String : AnyObject]]
                         //Populate the students array by converting the JSON objects
                         //to StudentInformation objects
                         self.students = self.students + StudentInformation.studentInformationFromResults(results)
@@ -323,12 +330,12 @@ extension OTMClient{
         
         if IJReachability.isConnectedToNetwork(){
             // extract the lat and long from the location annotation
-            var headers : [String: String] = [
+            let headers : [String: String] = [
                 "X-Parse-Application-Id": Constants.ParseApplicationID,
                 "X-Parse-REST-API-Key": Constants.RESTApiKey,
                 "Content-Type":"application/json"]
             
-            var parameters = [String : AnyObject]()
+            let parameters = [String : AnyObject]()
             //Create the string for posting
             var jsonBody: [String: AnyObject]
             jsonBody = ["uniqueKey": self.udacityUser.userId! as String,"firstName":self.udacityUser.firstName! as String,
@@ -339,7 +346,7 @@ extension OTMClient{
                 "longitude":self.udacityUser.longitude! as Double
             ]
             
-            if let objectid = self.udacityUser.objectId {
+            if let _ = self.udacityUser.objectId {
                 
                 updateParseApiLocation(parameters, headers: headers, jsonBody: jsonBody,completionHandler:completionHandler)
             }else{
@@ -357,9 +364,15 @@ extension OTMClient{
     private func updateParseApiLocation(parameters:[String:AnyObject!],headers:[String:String],jsonBody:[String: AnyObject],completionHandler: (success:Bool, errorString:String?) -> Void){
         
         //Update the database.
-        var jsonifyError: NSError? = nil
-        let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
-        let task = taskForPUTMethod(Constants.ApiParseAPIURL+self.udacityUser.objectId!, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+        //var jsonifyError: NSError? = nil
+        let body: NSData?
+        do {
+            body = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+        } catch _ as NSError {
+            //jsonifyError = error
+            body = nil
+        }
+        _ = taskForPUTMethod(Constants.ApiParseAPIURL+self.udacityUser.objectId!, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
             
             /* 3. Send the desired value(s) to completion handler */
             if error != nil  {
@@ -390,9 +403,15 @@ extension OTMClient{
     //Insert a new entry in the ParseApiLocation database.
     //
     private func createNewLocation(parameters:[String:AnyObject!],headers:[String:String],jsonBody:[String: AnyObject],completionHandler: (success:Bool, errorString:String?) -> Void){
-        var jsonifyError: NSError? = nil
-        let body = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
-        let task = taskForPOSTMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
+        //var jsonifyError: NSError? = nil
+        let body: NSData?
+        do {
+            body = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+        } catch _ as NSError {
+           // jsonifyError = error
+            body = nil
+        }
+        _ = taskForPOSTMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers, jsonBody: body!) { data, error in
             
             /* Send the desired value(s) to completion handler */
             if error != nil {
@@ -425,15 +444,15 @@ extension OTMClient{
     //
     func retrieveMyLocation( completionHandler: (success: Bool, errorString: String?) -> Void){
         // extract the lat and long from the location annotation
-        var headers : [String: String] = [
+        let headers : [String: String] = [
             "X-Parse-Application-Id": Constants.ParseApplicationID,
             "X-Parse-REST-API-Key": Constants.RESTApiKey,
             "Content-Type":"application/json"]
         
-        var parameters = ["where":"{\"uniqueKey\":\"\(self.udacityUser.userId!)\"}"]
+        let parameters = ["where":"{\"uniqueKey\":\"\(self.udacityUser.userId!)\"}"]
         
         //Make the request
-        let task = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
+        _ = taskForGETMethod(Constants.ApiParseAPIURL, parameters: parameters,headers:headers) { data, error in
             
             /* Send the desired value(s) to completion handler */
             if error != nil {
@@ -448,14 +467,14 @@ extension OTMClient{
                     }else{
                         
                         // println(JSONData)
-                        var results = JSONData["results"] as! [[String : AnyObject]]
+                        let results = JSONData["results"] as! [[String : AnyObject]]
                         if results.count == 0 {
                             completionHandler(success: false, errorString: "User hasn't posted data")
                             return
                         }
                         //Assuming that we will be able to post one
                         //location per user.
-                        var result = results.first
+                        let result = results.first
                         if let result = result{
                             
                             OTMClient.sharedInstance().udacityUser.objectId = result["objectId"] as? String
@@ -492,13 +511,13 @@ extension OTMClient{
                 request.HTTPMethod = "DELETE"
                 var xsrfCookie: NSHTTPCookie? = nil
                 let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-                for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
+                for cookie in (sharedCookieStorage.cookies as [NSHTTPCookie]?)! {
                     if cookie.name == "XSRF-TOKEN" {
                         xsrfCookie = cookie
                     }
                 }
                 if let xsrfCookie = xsrfCookie {
-                    request.addValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-Token")
+                    request.addValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-Token")
                 }
                 let session = NSURLSession.sharedSession()
                 let task = session.dataTaskWithRequest(request) { data, response, error in

@@ -68,7 +68,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
     
     @IBAction func findOnMapPressed(sender: UIButton) {
         
-        if locationTextField.text.isEmpty{
+        if locationTextField.text!.isEmpty{
             
             OTMClient.alertDialog(self, errorTitle: "Invalid Location", action: "OK", errorMsg: "Please type in the location ")
         }
@@ -78,11 +78,11 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
             activityIndicatorView.startAnimating()
             findOnMapButton.alpha = 0.2
             
-            getLocationFromString(locationTextField.text, withCompletion: { (location, error) -> () in
+            getLocationFromString(locationTextField.text!, withCompletion: { (location, error) -> () in
                 
                 if let error = error {
                     
-                    println("getLocationFromString error \(error)")
+                    print("getLocationFromString error \(error)")
                     self.activityIndicatorView.stopAnimating()
                     OTMClient.alertDialogWithHandler(self, errorTitle: "Invalid Location", action: "OK", errorMsg: "Cannot get the location",handler:{
                         
@@ -92,16 +92,16 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
                     })
                 } else {
                     
-                    println("location coordinates \(location)")
+                    print("location coordinates \(location)")
                     
                     dispatch_async(dispatch_get_main_queue()){
                         
-                        var span = MKCoordinateSpanMake(0.2, 0.2)
-                        var region = MKCoordinateRegion(center: location!.coordinate, span: span)
+                        let span = MKCoordinateSpanMake(0.2, 0.2)
+                        let region = MKCoordinateRegion(center: location!.coordinate, span: span)
                         
                         self.mapView.setRegion(region, animated: true)
                         
-                        var annotation = MKPointAnnotation()
+                        let annotation = MKPointAnnotation()
                         annotation.coordinate = location!.coordinate
                         annotation.title = "\(OTMClient.sharedInstance().udacityUser.firstName!) \(OTMClient.sharedInstance().udacityUser.lastName!)"
                         annotation.subtitle = OTMClient.sharedInstance().udacityUser.weblink
@@ -140,26 +140,27 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
     //Method to get the longitude and latitude
     //from the geocode address string
     func getLocationFromString(geoCodeString: String, withCompletion completion: (location: CLLocation?, error: NSError?) -> ()) {
-        
-        CLGeocoder().geocodeAddressString(geoCodeString) { (location: [AnyObject]!, error: NSError!) -> Void in
+        CLGeocoder().geocodeAddressString(geoCodeString, completionHandler: {(placemarks, error) -> Void in
+
+
             //            println("geocode \(location)")
             if error != nil {
                 
-                println("error geocoding in function \(error)")
+                print("error geocoding in function \(error)")
                 completion(location: nil, error: error)
                 
             } else {
                 
-                let placemark = location.first as! CLPlacemark
-                let coordinates = placemark.location
+                let placemark = placemarks?.first
+                let coordinates = placemark!.location
                 // set the string and coordinates
                 OTMClient.sharedInstance().udacityUser.mapString = geoCodeString
-                OTMClient.sharedInstance().udacityUser.longitude = coordinates.coordinate.longitude
-                OTMClient.sharedInstance().udacityUser.latitude = coordinates.coordinate.latitude
+                OTMClient.sharedInstance().udacityUser.longitude = coordinates!.coordinate.longitude
+                OTMClient.sharedInstance().udacityUser.latitude = coordinates!.coordinate.latitude
                 
                 completion(location: coordinates, error: nil)
             }
-        }
+        })
     }
     
     //textfield delegate methods
@@ -196,12 +197,12 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         }
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         
-        println("webview errorCode \(error.code)")
+        print("webview errorCode \(error!.code)")
         //Not sure why webview returns when the backend forwards the page
         //hack to let the webview proceed.
-        if(error.code == -999){
+        if(error!.code == -999){
             return
         }
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -209,7 +210,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         let requestObj = NSURLRequest(URL: NSURL(string: "about:blank")!)
         self.webView.loadRequest(requestObj)
         
-        OTMClient.alertDialog(self, errorTitle: "Error loading the URL", action: "OK", errorMsg: "\(error.localizedDescription) \(error.code)")
+        OTMClient.alertDialog(self, errorTitle: "Error loading the URL", action: "OK", errorMsg: "\(error!.localizedDescription) \(error!.code)")
     }
     
     private func updateShowBrowserState(show: Bool){
@@ -242,7 +243,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
         
         if !isUrlValid && urlTextField.text != ""{
             
-            if let components = NSURLComponents(string: urlTextField.text) {
+            if let components = NSURLComponents(string: urlTextField.text!) {
                 
                 if components.scheme == nil {
                     
@@ -276,7 +277,7 @@ class InfoPositionViewController : UIViewController, UITextFieldDelegate,UIWebVi
     
     @IBAction func submitPressed(sender: UIButton) {
         
-        if urlTextField.text.isEmpty{
+        if urlTextField.text!.isEmpty{
             
             OTMClient.alertDialog(self, errorTitle: "Invalid URL", action: "OK", errorMsg: "Please input your URL")
         }else{

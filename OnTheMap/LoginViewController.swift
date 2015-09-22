@@ -101,7 +101,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             OTMClient.sharedInstance().facebookLogin(){ (success, errorString) in
                 if success {
                     
-                    println(OTMClient.sharedInstance().sessionId!)
+                    print(OTMClient.sharedInstance().sessionId!)
                     self.completeLogin()
                     
                 } else {
@@ -124,7 +124,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         OTMClient.sharedInstance().logout {
             (success, errorString) -> Void in
             
-            println("Logged out from facebook")
+            print("Logged out from facebook")
         }
     }
 }

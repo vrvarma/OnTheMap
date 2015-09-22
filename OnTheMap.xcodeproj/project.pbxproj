@@ -18,7 +18,6 @@
 		1D3334F11B812E4F00ED9CB8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */; };
 		1D3334F31B813DA300ED9CB8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F21B813DA300ED9CB8 /* TableViewController.swift */; };
 		1D3334F51B814B4C00ED9CB8 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3334F41B814B4C00ED9CB8 /* StudentInformation.swift */; };
-		1D3334FD1B81884F00ED9CB8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */; };
 		1D5CC1EF1B783FD300D1857F /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1EC1B783FD300D1857F /* Roboto-Medium.ttf */; };
 		1D5CC1F01B783FD300D1857F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1ED1B783FD300D1857F /* Roboto-Regular.ttf */; };
 		1D5CC1F11B783FD300D1857F /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5CC1EE1B783FD300D1857F /* Roboto-Thin.ttf */; };
@@ -26,9 +25,10 @@
 		1D8904011B87656A00DE663D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8904001B87656A00DE663D /* Reachability.swift */; };
 		1D8904061B879BB000DE663D /* OTMNWClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8904051B879BB000DE663D /* OTMNWClient.swift */; };
 		1D8FFCEB1B7C29A6003C6DAD /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FFCEA1B7C29A6003C6DAD /* OTMConvenience.swift */; };
-		1D8FFCEE1B7C4C75003C6DAD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */; };
-		1D8FFCF01B7C4D45003C6DAD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */; };
 		1D8FFCF41B7C5D00003C6DAD /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */; };
+		1DCEEED21BB0FBF7003859D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCEEED11BB0FBF7003859D0 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
+		1DCEEED41BB0FC0B003859D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCEEED31BB0FC0B003859D0 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
+		1DCEEED61BB0FC1C003859D0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCEEED51BB0FC1C003859D0 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		1DF189311B8C0C0E0057F10D /* OTMCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF189301B8C0C0E0057F10D /* OTMCollectionViewCell.swift */; };
 		1DF189331B8C0C800057F10D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF189321B8C0C800057F10D /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -59,7 +59,6 @@
 		1D3334F01B812E4F00ED9CB8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1D3334F21B813DA300ED9CB8 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		1D3334F41B814B4C00ED9CB8 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
-		1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		1D5CC1EC1B783FD300D1857F /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		1D5CC1ED1B783FD300D1857F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		1D5CC1EE1B783FD300D1857F /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -67,9 +66,10 @@
 		1D8904001B87656A00DE663D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1D8904051B879BB000DE663D /* OTMNWClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMNWClient.swift; sourceTree = "<group>"; };
 		1D8FFCEA1B7C29A6003C6DAD /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConvenience.swift; sourceTree = "<group>"; };
-		1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1D8FFCF31B7C5D00003C6DAD /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		1DCEEED11BB0FBF7003859D0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		1DCEEED31BB0FC0B003859D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		1DCEEED51BB0FC1C003859D0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		1DF189301B8C0C0E0057F10D /* OTMCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMCollectionViewCell.swift; sourceTree = "<group>"; };
 		1DF189321B8C0C800057F10D /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,9 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D8FFCEE1B7C4C75003C6DAD /* FBSDKLoginKit.framework in Frameworks */,
-				1D8FFCF01B7C4D45003C6DAD /* FBSDKCoreKit.framework in Frameworks */,
-				1D3334FD1B81884F00ED9CB8 /* FBSDKShareKit.framework in Frameworks */,
+				1DCEEED41BB0FC0B003859D0 /* FBSDKCoreKit.framework in Frameworks */,
+				1DCEEED21BB0FBF7003859D0 /* FBSDKShareKit.framework in Frameworks */,
+				1DCEEED61BB0FC1C003859D0 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,9 +226,9 @@
 		1D8FFCEC1B7C4C51003C6DAD /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				1D3334FC1B81884F00ED9CB8 /* FBSDKShareKit.framework */,
-				1D8FFCEF1B7C4D45003C6DAD /* FBSDKCoreKit.framework */,
-				1D8FFCED1B7C4C75003C6DAD /* FBSDKLoginKit.framework */,
+				1DCEEED51BB0FC1C003859D0 /* FBSDKLoginKit.framework */,
+				1DCEEED31BB0FC0B003859D0 /* FBSDKCoreKit.framework */,
+				1DCEEED11BB0FBF7003859D0 /* FBSDKShareKit.framework */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -277,7 +277,9 @@
 		1D1C09121B6E92AA005EB0A9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Vikas Varma";
 				TargetAttributes = {
 					1D1C09191B6E92AA005EB0A9 = {
@@ -412,6 +414,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -482,6 +485,7 @@
 				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikas.nanodegree.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -496,6 +500,7 @@
 				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikas.nanodegree.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -504,16 +509,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = OnTheMapTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikas.nanodegree.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnTheMap.app/OnTheMap";
 			};
@@ -523,12 +525,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = OnTheMapTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.vikas.nanodegree.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnTheMap.app/OnTheMap";
 			};

@@ -153,7 +153,7 @@ class CollectionViewController : UICollectionViewController{
     //Alert dialog to confirm with the user that he/she wants to overwrite the data
     func buildAlertDialog() -> UIAlertController{
         
-        var confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
+        let confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
         
         //Overwrite button just closes the dialog
         confirm.addAction(UIAlertAction(title: "Overwrite",style: UIAlertActionStyle.Default, handler: {
@@ -162,7 +162,7 @@ class CollectionViewController : UICollectionViewController{
         }))
         
         //Cancel button
-        var alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
+        let alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
         confirm.addAction(alertCancel)
         return confirm
     }

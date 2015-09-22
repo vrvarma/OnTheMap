@@ -16,7 +16,13 @@ extension OTMClient{
         
         var parsingError: NSError? = nil
         
-        let parsedResult: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)
+        let parsedResult: AnyObject?
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+        } catch let error as NSError {
+            parsingError = error
+            parsedResult = nil
+        }
         
         if let error = parsingError {
             completionHandler(result: nil, error: error)
@@ -44,14 +50,14 @@ extension OTMClient{
             
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     //Implement GET Method
     func taskForGETMethod(urlString: String, parameters: [String : AnyObject],headers:[String:String],completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        var mutableParameters = parameters
+        let mutableParameters = parameters
         
         /* 2/3. Build the URL and configure the request */
         let urlString = urlString + OTMClient.escapedParameters(mutableParameters)
@@ -67,7 +73,7 @@ extension OTMClient{
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            if let error = downloadError {
+            if let _ = downloadError {
                 completionHandler(result:nil,  error:downloadError)
             } else {
                 completionHandler(result: data,  error:nil)
@@ -83,7 +89,7 @@ extension OTMClient{
     func taskForPUTMethod(urlString: String, parameters: [String : AnyObject], headers:[String:String], jsonBody: AnyObject, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        var mutableParameters = parameters
+        let mutableParameters = parameters
         
         /* 2/3. Build the URL and configure the request */
         let url = NSURL(string: urlString + OTMClient.escapedParameters(mutableParameters))!
@@ -101,13 +107,13 @@ extension OTMClient{
         //println(jsonBody)
         request.HTTPBody = jsonBody as? NSData
         
-        println(request)
+        print(request)
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            if let error = downloadError {
+            if let _ = downloadError {
                 
                 completionHandler(result: nil, error: downloadError)
             } else {
@@ -125,7 +131,7 @@ extension OTMClient{
     func taskForPOSTMethod(urlString: String, parameters: [String : AnyObject], headers:[String:String], jsonBody: AnyObject, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        var mutableParameters = parameters
+        let mutableParameters = parameters
         
         /* 2/3. Build the URL and configure the request */
         let url = NSURL(string: urlString + OTMClient.escapedParameters(mutableParameters))!
@@ -149,7 +155,7 @@ extension OTMClient{
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            if let error = downloadError {
+            if let _ = downloadError {
                 
                 completionHandler(result: nil, error: downloadError)
             } else {

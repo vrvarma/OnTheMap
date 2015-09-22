@@ -68,7 +68,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     }
     
     //UIMapView Delegate Methods
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
@@ -78,7 +78,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {
             pinView!.annotation = annotation
@@ -87,14 +87,14 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     }
     
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         dispatch_async(dispatch_get_main_queue()){
             
-            var mapString = view.annotation.subtitle!
-            if !mapString.hasPrefix("http") {
-                mapString = "http://"+mapString
+            var mapString = view.annotation!.subtitle!
+            if !mapString!.hasPrefix("http") {
+                mapString = "http://"+mapString!
             }
-            UIApplication.sharedApplication().openURL(NSURL(string: mapString)!)
+            UIApplication.sharedApplication().openURL(NSURL(string: mapString!)!)
         }
     }
     
@@ -112,10 +112,10 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.mapView.removeAnnotations(self.mapView.annotations)
-                    var annotations = [AnyObject]()
+                    var annotations = [MKAnnotation]()
                     for student in OTMClient.sharedInstance().students{
                         
-                        var annotation: AnyObject! = self.buildAnnotationFromStudent(student) as AnyObject
+                        let annotation: MKAnnotation! = self.buildAnnotationFromStudent(student) as MKAnnotation
                         annotations.append(annotation)
                     }
                     self.mapView.addAnnotations(annotations)
@@ -139,7 +139,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     //Method to build the MKPoint annotation from StudentInformation struct
     func buildAnnotationFromStudent(student :StudentInformation)-> MKPointAnnotation{
         
-        var annotation = MKPointAnnotation()
+        let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: student.latitude, longitude: student.longitude)
         annotation.title = "\(student.firstName) \(student.lastName)"
         annotation.subtitle = student.mediaURL
@@ -172,7 +172,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
     //Alert dialog to confirm with the user that he/she wants to overwrite the data
     func buildAlertDialog() -> UIAlertController{
         
-        var confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
+        let confirm = UIAlertController(title: "You have already posted a location", message: "Do you want to overwrite the current location?", preferredStyle: UIAlertControllerStyle.Alert)
         
         //Overwrite button just closes the dialog
         confirm.addAction(UIAlertAction(title: "Overwrite",style: UIAlertActionStyle.Default, handler: {
@@ -181,7 +181,7 @@ class MapViewController: UIViewController ,MKMapViewDelegate{
         }))
         
         //Cancel button
-        var alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
+        let alertCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
         confirm.addAction(alertCancel)
         return confirm
     }
