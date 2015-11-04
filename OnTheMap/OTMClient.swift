@@ -66,4 +66,6 @@ class OTMClient : NSObject {
         resetDataModel()
         FBSDKAccessToken.setCurrentAccessToken(nil)
     }
+    
+    
 }

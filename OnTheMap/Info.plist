@@ -53,8 +53,11 @@
             <string>UIInterfaceOrientationLandscapeLeft</string>
             <string>UIInterfaceOrientationLandscapeRight</string>
         </array>
+        
         <key>NSAppTransportSecurity</key>
         <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
             <key>NSExceptionDomains</key>
             <dict>
                 <key>facebook.com</key>
@@ -79,6 +82,7 @@
                     <false/>
                 </dict>
             </dict>
+            
         </dict>
         <key>LSApplicationQueriesSchemes</key>
         <array>
